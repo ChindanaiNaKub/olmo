@@ -1,0 +1,48 @@
+{
+  "name": "@olmo/game",
+  "version": "0.1.0",
+  "private": true,
+  "files": [
+    "dist",
+    "src"
+  ],
+  "type": "module",
+  "exports": {
+    "./contracts": {
+      "types": "./src/contracts.ts",
+      "import": "./dist/contracts.js",
+      "default": "./dist/contracts.js"
+    },
+    "./model": {
+      "types": "./src/model.ts",
+      "import": "./dist/model.js",
+      "default": "./dist/model.js"
+    },
+    "./physics": {
+      "types": "./src/physics.ts",
+      "import": "./dist/physics.js",
+      "default": "./dist/physics.js"
+    },
+    "./world": {
+      "types": "./src/world.ts",
+      "import": "./dist/world.js",
+      "default": "./dist/world.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check": "pnpm run typecheck",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@rat-stack/capability": "workspace:*",
+    "effect": "4.0.0"
+  },
+  "devDependencies": {
+    "@effect/vitest": "4.0.0",
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2",
+    "vitest": "5.0.5"
+  }
+}

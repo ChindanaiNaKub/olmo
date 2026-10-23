@@ -1,0 +1,24 @@
+{
+  "name": "@olmo/client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "check": "pnpm run typecheck",
+    "dev": "vite",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@effect/platform-browser": "4.0.0",
+    "@olmo/game": "workspace:*",
+    "effect": "4.0.0",
+    "foldkit": "0.168.0"
+  },
+  "devDependencies": {
+    "@foldkit/vite-plugin": "0.27.1",
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2",
+    "vite": "8.3.4"
+  }
+}

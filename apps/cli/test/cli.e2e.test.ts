@@ -14,6 +14,8 @@ const cliPath = path.join(cliDir, "dist", "cli.js");
 
 const readmePath = path.join(repoRoot, "README.md");
 
+const agentsPath = path.join(repoRoot, "AGENTS.md");
+
 const decodeOpenApi = Schema.decodeUnknownSync(
   Schema.fromJsonString(
     Schema.Struct({
@@ -196,7 +198,7 @@ describe("built MCP server", () => {
           method: "tools/call",
           params: {
             arguments: {
-              code: `const stats = await tools.inspectFile({ path: ${JSON.stringify(readmePath)} }); return stats.lines > 10;`,
+              code: `const stats = await tools.inspectFile({ path: ${JSON.stringify(agentsPath)} }); return stats.lines > 10;`,
             },
             name: "execute",
           },

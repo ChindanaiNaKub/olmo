@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@effect/language-service",
+        "allowedUnstableApis": [
+          "effect/Arbitrary",
+          "effect/http/HttpServerRequest",
+          "effect/http/HttpServerResponse",
+          "effect/rpc/RpcSerialization",
+          "effect/rpc/RpcServer"
+        ]
+      }
+    ],
+    "lib": ["ES2023"],
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts"]
+}

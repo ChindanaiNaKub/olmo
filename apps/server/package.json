@@ -1,0 +1,20 @@
+{
+  "name": "@olmo/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "pnpm run typecheck",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@olmo/game": "workspace:*",
+    "@rat-stack/capability": "workspace:*",
+    "alchemy": "2.0.0-beta.83",
+    "effect": "4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2"
+  }
+}

@@ -6,7 +6,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter @rat-stack/web dev",
+    "dev": "pnpm --filter @olmo/client dev",
+    "dev:reference": "pnpm --filter @rat-stack/web dev",
     "acceptance:cold-clone": "bash scripts/acceptance-cold-clone.sh",
     "alchemy": "pnpm --filter @rat-stack/infra exec alchemy",
     "build": "turbo run build",
