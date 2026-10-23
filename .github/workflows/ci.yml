@@ -26,13 +26,6 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Fetch pinned source objects
         run: pnpm sources:fetch
-      - name: Restore full history
-        # sources:fetch fetches pinned commits with --depth=1 into this checkout,
-        # which marks it shallow and blocks the site generator's snapshot check.
-        run: |
-          if [ "$(git rev-parse --is-shallow-repository)" != "false" ]; then
-            git fetch --unshallow --tags
-          fi
       - name: Check and test
         # Serialize Turbo tasks so concurrent Vitest pools do not contend on the CI runner.
         run: pnpm turbo run check test build --concurrency=1

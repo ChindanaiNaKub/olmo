@@ -62,7 +62,7 @@ export const openGitSnapshot = Effect.fn("openGitSnapshot")(
       });
     }
 
-    if (checkout) {
+    if (regenerate && checkout) {
       const shallow = yield* spawner.string(
         command(["rev-parse", "--is-shallow-repository"])
       );
