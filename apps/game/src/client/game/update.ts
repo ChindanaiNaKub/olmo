@@ -6,6 +6,7 @@ import {
   REACH_TILES,
   ServerMessageSchema,
   TILE_SIZE,
+  blockHardness,
   inventorySlots,
 } from "@olmo/game/model";
 import type { PlayerState, ServerMessage } from "@olmo/game/model";
@@ -22,8 +23,8 @@ import { modifyFields } from "foldkit/struct";
 import { SendClientMessage } from "./command.js";
 import { GameMessage } from "./message.js";
 import type { Message } from "./message.js";
-import type { ChatEntry, Model } from "./model.js";
-import { rememberName } from "./model.js";
+import type { ChatEntry, Hit, Model } from "./model.js";
+import { BURST_MS, rememberName } from "./model.js";
 import type { GameSocketService } from "./socket.js";
 
 type UpdateReturn = Update.Return<Model, Message, GameSocketService>;
@@ -51,6 +52,25 @@ const systemLine = (text: string): ChatEntry => ({
   name: "system",
   text,
 });
+
+const withoutHit = (
+  hits: readonly Hit[],
+  tx: number,
+  ty: number
+): readonly Hit[] => hits.filter((entry) => entry.tx !== tx || entry.ty !== ty);
+
+const hitsAt = (hits: readonly Hit[], tx: number, ty: number): number =>
+  hits.find((entry) => entry.tx === tx && entry.ty === ty)?.hits ?? 0;
+
+const withHits = (
+  hits: readonly Hit[],
+  tx: number,
+  ty: number,
+  count: number
+): readonly Hit[] =>
+  count <= 0
+    ? withoutHit(hits, tx, ty)
+    : [...withoutHit(hits, tx, ty), { hits: count, tx, ty }];
 
 const setPressed = (model: Model, patch: Partial<Model["pressed"]>): Model =>
   modifyFields(model, { pressed: (pressed) => ({ ...pressed, ...patch }) });
@@ -118,6 +138,7 @@ const handleServerMessage = (
     Rejected: ({ reason }) => ({
       model: modifyFields(model, {
         chat: (chat) => [...chat, systemLine(reason)].slice(-40),
+        hits: () => [],
       }),
     }),
 
@@ -126,8 +147,10 @@ const handleServerMessage = (
 
       return {
         model: modifyFields(model, {
+          bursts: () => [],
           connection: () => "live",
           error: () => null,
+          hits: () => [],
           joined: () => true,
           players: () => snapshot.players,
           self: () => self,
@@ -145,11 +168,38 @@ const handleServerMessage = (
         return { model };
       }
 
+      const previous = tileAt(model.tiles, x, y);
       const tiles = [...model.tiles];
 
       tiles[tileIndex(x, y)] = block;
 
-      return { model: modifyFields(model, { tiles: () => tiles }) };
+      const bursts =
+        block === Air && previous !== Air
+          ? [
+              ...model.bursts,
+              { at: performance.now(), block: previous, tx: x, ty: y },
+            ].slice(-12)
+          : model.bursts;
+
+      return {
+        model: modifyFields(model, {
+          bursts: () => bursts,
+          hits: (hits) => withoutHit(hits, x, y),
+          tiles: () => tiles,
+        }),
+      };
+    },
+
+    TileCracked: ({ hits, tx, ty }) => {
+      const x = Math.floor(tx);
+      const y = Math.floor(ty);
+
+      return {
+        model: modifyFields(model, {
+          hits: (current) =>
+            withHits(current, x, y, Math.max(hits, hitsAt(current, x, y))),
+        }),
+      };
     },
   });
 
@@ -178,18 +228,38 @@ export const update = (model: Model, message: Message): UpdateReturn =>
         return { model };
       }
 
-      const outbound =
-        existing === Air
-          ? ClientMessageSchema.cases.Place.make({
-              block: model.selected,
-              tx,
-              ty,
-            })
-          : ClientMessageSchema.cases.Punch.make({ tx, ty });
+      if (existing === Air) {
+        return {
+          commands: [
+            SendClientMessage({
+              message: ClientMessageSchema.cases.Place.make({
+                block: model.selected,
+                tx,
+                ty,
+              }),
+            }),
+          ],
+          model: modifyFields(model, {
+            hits: (hits) => withoutHit(hits, tx, ty),
+          }),
+        };
+      }
+
+      const landed = Math.min(
+        hitsAt(model.hits, tx, ty) + 1,
+        blockHardness[existing]
+      );
 
       return {
-        commands: [SendClientMessage({ message: outbound })],
-        model,
+        commands: [
+          SendClientMessage({
+            message: ClientMessageSchema.cases.Punch.make({ tx, ty }),
+          }),
+        ],
+        model: modifyFields(model, {
+          hits: (hits) => withHits(hits, tx, ty, landed),
+          punchAt: () => performance.now(),
+        }),
       };
     },
 
@@ -326,7 +396,9 @@ export const update = (model: Model, message: Message): UpdateReturn =>
       return {
         commands: [
           SendClientMessage({
-            message: ClientMessageSchema.cases.Join.make({ name: model.name }),
+            message: ClientMessageSchema.cases.Join.make({
+              name: model.name,
+            }),
           }),
         ],
         model: modifyFields(model, {
@@ -421,7 +493,10 @@ export const update = (model: Model, message: Message): UpdateReturn =>
             ]
           : [],
         model: modifyFields(model, {
+          bursts: () =>
+            model.bursts.filter((burst) => now - burst.at <= BURST_MS),
           lastSent: () => (shouldSend ? now : model.lastSent),
+          now: () => now,
           self: () => self,
         }),
       };

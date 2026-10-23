@@ -2,19 +2,29 @@ import { describe, expect, it } from "@effect/vitest";
 import { Arbitrary, Schema } from "effect";
 
 import {
+  Air,
+  Brick,
   Dirt,
   Grass,
+  PLAYER_HEIGHT,
+  PLAYER_WIDTH,
+  Stone,
   TILE_SIZE,
+  Wood,
   WORLD_HEIGHT,
   WORLD_WIDTH,
+  blockHardness,
 } from "../src/model.js";
+import type { BlockId } from "../src/model.js";
 import {
   createPlayer,
+  insideWorld,
   overlapsSolid,
   stepPlayer,
+  tileAt,
   tileIndex,
 } from "../src/physics.js";
-import { breakTile, createWorldTiles, placeTile } from "../src/world.js";
+import { createWorldTiles, placeTile, strikeTile } from "../src/world.js";
 
 const offset = Arbitrary.schema(Schema.Int);
 
@@ -46,9 +56,21 @@ describe("world rules", () => {
       const baseTy = Math.floor(player.y / TILE_SIZE);
       const tx = baseTx + wrap(dx, 5) - 2;
       const ty = baseTy + wrap(dy, 5) - 2;
-      const broken = breakTile(tiles, player, tx, ty);
+      const block = tileAt(tiles, tx, ty);
 
-      if (!broken.ok) {
+      if (block === Air) {
+        return;
+      }
+
+      const broken = strikeTile(
+        tiles,
+        player,
+        tx,
+        ty,
+        blockHardness[block] - 1
+      );
+
+      if (broken.kind !== "broken") {
         return;
       }
 
@@ -87,6 +109,84 @@ describe("world rules", () => {
       expect(next.y).toBeGreaterThanOrEqual(0);
       expect(next.x).toBeLessThanOrEqual(WORLD_WIDTH * TILE_SIZE);
       expect(next.y).toBeLessThanOrEqual(WORLD_HEIGHT * TILE_SIZE);
+    }
+  );
+});
+
+const reachableCell = () => {
+  const tiles = createWorldTiles();
+  const player = createPlayer("hardness", "Tester", tiles);
+  const baseTx = Math.floor((player.x + PLAYER_WIDTH / 2) / TILE_SIZE);
+  const baseTy = Math.floor((player.y + PLAYER_HEIGHT / 2) / TILE_SIZE);
+
+  return { player, tx: baseTx + 2, ty: baseTy - 1 };
+};
+
+const withBlock = (block: BlockId) => {
+  const { player, tx, ty } = reachableCell();
+  const tiles = [...createWorldTiles()];
+
+  tiles[tileIndex(tx, ty)] = block;
+
+  return { player, tiles, tx, ty };
+};
+
+describe("block hardness", () => {
+  it("breaks dirt and grass on the first punch", () => {
+    for (const block of [Dirt, Grass] as const) {
+      const { player, tiles, tx, ty } = withBlock(block);
+
+      expect(insideWorld(tx, ty)).toBe(true);
+      expect(strikeTile(tiles, player, tx, ty, 0).kind).toBe("broken");
+    }
+  });
+
+  it("takes two punches for wood and three for stone and brick", () => {
+    const tiers: readonly { block: BlockId; punches: number }[] = [
+      { block: Wood, punches: 2 },
+      { block: Stone, punches: 3 },
+      { block: Brick, punches: 3 },
+    ];
+
+    for (const { block, punches } of tiers) {
+      const { player, tiles, tx, ty } = withBlock(block);
+
+      for (let hit = 0; hit < punches - 1; hit += 1) {
+        expect(strikeTile(tiles, player, tx, ty, hit).kind).toBe("cracked");
+        expect(tileAt(tiles, tx, ty)).toBe(block);
+      }
+
+      const last = strikeTile(tiles, player, tx, ty, punches - 1);
+
+      expect(last.kind).toBe("broken");
+
+      if (last.kind === "broken") {
+        expect(last.collected).toBe(block);
+        expect(tileAt(last.tiles, tx, ty)).toBe(Air);
+      }
+    }
+  });
+
+  it("breaks instead of underflowing when the hit count is stale", () => {
+    const { player, tiles, tx, ty } = withBlock(Stone);
+
+    expect(strikeTile(tiles, player, tx, ty, 99).kind).toBe("broken");
+  });
+
+  it.prop(
+    "striking never mutates the world it was given",
+    { dx: offset, dy: offset },
+    ({ dx, dy }) => {
+      const tiles = createWorldTiles();
+      const before = [...tiles];
+      const player = createPlayer("pure", "Tester", tiles);
+      const tx = Math.floor(player.x / TILE_SIZE) + (wrap(dx, 5) - 2);
+      const ty = Math.floor(player.y / TILE_SIZE) + (wrap(dy, 5) - 2);
+
+      strikeTile(tiles, player, tx, ty, 0);
+      strikeTile(tiles, player, tx, ty, 2);
+
+      expect(tiles).toStrictEqual(before);
     }
   );
 });

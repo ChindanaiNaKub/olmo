@@ -62,6 +62,15 @@ export const blockColors: Readonly<Record<BlockId, string>> = {
   5: "#b04a3c",
 };
 
+export const blockHardness: Readonly<Record<BlockId, number>> = {
+  0: 0,
+  1: 1,
+  2: 1,
+  3: 3,
+  4: 2,
+  5: 3,
+};
+
 export const inventorySlots: readonly BlockId[] = [
   Dirt,
   Grass,
@@ -194,6 +203,11 @@ export const ServerMessageSchema = Schema.TaggedUnion({
   },
   TileChanged: {
     block: BlockIdSchema,
+    tx: Schema.Finite,
+    ty: Schema.Finite,
+  },
+  TileCracked: {
+    hits: Schema.Finite,
     tx: Schema.Finite,
     ty: Schema.Finite,
   },

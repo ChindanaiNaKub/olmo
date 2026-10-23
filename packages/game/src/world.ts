@@ -7,6 +7,7 @@ import {
   REACH_TILES,
   Stone,
   Wood,
+  blockHardness,
   WORLD_HEIGHT,
   WORLD_WIDTH,
 } from "./model.js";
@@ -24,14 +25,15 @@ import {
   withinReachTiles,
 } from "./physics.js";
 
-export type TileResult =
+export type StrikeResult =
+  | Readonly<{ kind: "cracked"; hits: number }>
   | Readonly<{
-      ok: true;
+      kind: "broken";
       tiles: readonly BlockId[];
       change: TileChange;
       collected: BlockId;
     }>
-  | Readonly<{ ok: false; reason: TileRejection }>;
+  | Readonly<{ kind: "rejected"; reason: TileRejection }>;
 
 export const createWorldTiles = (): readonly BlockId[] => {
   const tiles: BlockId[] = Array.from(
@@ -144,30 +146,46 @@ export const canPlace = (
   return undefined;
 };
 
-export const breakTile = (
+export const strikeTile = (
   tiles: readonly BlockId[],
   player: Readonly<Pick<PlayerState, "x" | "y">>,
   tx: number,
-  ty: number
-): TileResult => {
+  ty: number,
+  hits: number
+): StrikeResult => {
   const rejection = canBreak(tiles, player, tx, ty);
 
   if (rejection !== undefined) {
-    return { ok: false, reason: rejection };
+    return { kind: "rejected", reason: rejection };
+  }
+
+  const block = tileAt(tiles, tx, ty);
+  const landed = hits + 1;
+
+  if (landed < blockHardness[block]) {
+    return { hits: landed, kind: "cracked" };
   }
 
   const next = [...tiles];
-  const collected = tileAt(tiles, tx, ty);
 
   next[tileIndex(tx, ty)] = Air;
 
   return {
     change: { block: Air, tx, ty },
-    collected,
-    ok: true,
+    collected: block,
+    kind: "broken",
     tiles: next,
   };
 };
+
+export type PlaceResult =
+  | Readonly<{
+      ok: true;
+      tiles: readonly BlockId[];
+      change: TileChange;
+      collected: BlockId;
+    }>
+  | Readonly<{ ok: false; reason: TileRejection }>;
 
 export const placeTile = (
   tiles: readonly BlockId[],
@@ -175,7 +193,7 @@ export const placeTile = (
   tx: number,
   ty: number,
   block: BlockId
-): TileResult => {
+): PlaceResult => {
   const rejection = block === Air ? "empty" : canPlace(tiles, player, tx, ty);
 
   if (rejection !== undefined) {

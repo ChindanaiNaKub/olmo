@@ -23,14 +23,16 @@ import {
   createPlayer,
   movedTooFar,
   overlapsSolid,
+  tileAt,
+  tileIndex,
 } from "@olmo/game/physics";
 import {
   addToInventory,
-  breakTile,
   createWorldTiles,
   emptyInventory,
   inventoryCount,
   placeTile,
+  strikeTile,
 } from "@olmo/game/world";
 import * as Cloudflare from "alchemy/Cloudflare";
 import { Effect, Option, Schema } from "effect";
@@ -64,6 +66,8 @@ const rejected = (reason: TileRejection | "player-not-found"): TileOutcome => ({
 });
 
 const TILES_KEY = "tiles";
+
+const CRACK_RESET_MS = 1500;
 
 const NAME_KEY = "name";
 
@@ -107,6 +111,7 @@ export default class World extends Cloudflare.DurableObject<World>()(
       let nextOrdinal = 1;
       let nameLocked = storedName !== undefined;
       const sessions = new Map<string, Session>();
+      const cracks = new Map<number, Readonly<{ hits: number; at: number }>>();
 
       if (storedTiles === undefined) {
         yield* state.storage.put(TILES_KEY, tiles);
@@ -315,11 +320,36 @@ export default class World extends Cloudflare.DurableObject<World>()(
           return rejected("player-not-found");
         }
 
-        const result = breakTile(tiles, session.player, tx, ty);
+        const index = tileIndex(tx, ty);
+        const now = performance.now();
 
-        if (!result.ok) {
+        const prior = cracks.get(index);
+
+        const landed =
+          prior !== undefined && now - prior.at <= CRACK_RESET_MS
+            ? prior.hits
+            : 0;
+
+        const result = strikeTile(tiles, session.player, tx, ty, landed);
+
+        if (result.kind === "rejected") {
           return rejected(result.reason);
         }
+
+        if (result.kind === "cracked") {
+          cracks.set(index, { at: now, hits: result.hits });
+          yield* broadcast(
+            ServerMessageSchema.cases.TileCracked.make({
+              hits: result.hits,
+              tx,
+              ty,
+            })
+          );
+
+          return accepted({ block: tileAt(tiles, tx, ty), tx, ty });
+        }
+
+        cracks.delete(index);
 
         const { tiles: nextTiles } = result;
 
