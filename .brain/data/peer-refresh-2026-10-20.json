@@ -1,0 +1,2132 @@
+{
+  "rubric": {
+    "S": "Upstream reference or adopted pattern, with source or adoption evidence.",
+    "A": "Active within 30 days, close stack, and a source-backed study.",
+    "B": "Relevant dependency families or integration; not enough study/adoption evidence for A or S.",
+    "C": "Screened without a relevant pattern for current work.",
+    "D": "No longer uses the stack; no relevant integration identified.",
+    "E": "No default-branch activity for at least 90 days and no current useful pattern.",
+    "F": "Inaccessible or archived with no usable reference; temporary failures remain unknown."
+  },
+  "fullRanking": [
+    {
+      "repo": "alchemy-run/alchemy",
+      "tier": "S",
+      "reason": "Upstream infrastructure reference; the study cites its RPC and Better Auth patterns.",
+      "versions": {
+        "effect": "4.0.4 (workspace override; catalog ^4.0.0)",
+        "alchemy": "2.0.0-beta.83 (workspace package)",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "foldkit/foldkit",
+      "tier": "S",
+      "reason": "UI upstream. Exact Effect peers set the upgrade boundary; devtools shapes and lint ideas already inform our implementation.",
+      "versions": {
+        "effect": "4.0.0 (exact UI and plugin peer)",
+        "alchemy": "—",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "just-be-dev/effect-cloudflare-foldkit-template",
+      "tier": "S",
+      "reason": "Adopted lifetime guidance, UI tests, and tracing patterns. Provenance records the source snapshot and author license confirmation.",
+      "versions": {
+        "effect": "4.0.4",
+        "alchemy": "2.0.0-beta.83",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "beep-effect/beep-effect",
+      "tier": "A",
+      "reason": "Active Oct 18; scoped inspector and model-test bridge studied. Stable Effect 4.0.4 resolves from its catalog.",
+      "versions": {
+        "effect": "4.0.4 (catalog)",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.64 (catalog)",
+        "xstateEffect": "0.1.0-alpha.6 (catalog)"
+      }
+    },
+    {
+      "repo": "MapleTechLabs/hazel",
+      "tier": "A",
+      "reason": "Active Oct 15; studied Foldkit catalogs and lockfile. Effect 4.0.4 still conflicts with Foldkit's exact Effect 4.0.0 peers.",
+      "versions": {
+        "effect": "4.0.4 (catalog)",
+        "alchemy": "2.0.0-beta.80 (catalog)",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "MapleTechLabs/maple",
+      "tier": "A",
+      "reason": "Active Oct 18; studied scoped Drizzle, Worker tests, and vendor boundaries.",
+      "versions": {
+        "effect": "4.0.4",
+        "alchemy": "2.0.0-beta.83",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "pingdotgg/t3code",
+      "tier": "A",
+      "reason": "Active Oct 18; studied PlanetScale and Hyperdrive resource wiring.",
+      "versions": {
+        "effect": "4.0.5",
+        "alchemy": "2.0.0-beta.80",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "smithersai/smithers",
+      "tier": "A",
+      "reason": "Active Oct 18; studied its SQLite-backed D1 test adapter.",
+      "versions": {
+        "effect": "4.0.5",
+        "alchemy": "2.0.0-beta.82",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "851-labs/tokenmaxxing",
+      "tier": "B",
+      "reason": "Shared Effect and Alchemy catalog pins warrant tailing; no study recorded yet.",
+      "versions": {
+        "effect": "4.0.0-rc.117",
+        "alchemy": "2.0.0-beta.79",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "BleedingDev/dx-feature-tracker",
+      "tier": "B",
+      "reason": "Rat-stack-derived cost tracker pins Effect 4, XState 6 and the Effect actor bridge; worth tailing its CLI/MCP seam.",
+      "versions": {
+        "effect": "4.0.0-rc.117",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.59",
+        "xstateEffect": "0.1.0-alpha.2"
+      }
+    },
+    {
+      "repo": "chr33s/bye",
+      "tier": "B",
+      "reason": "Effect email and calendar packages deploy with Alchemy on Cloudflare. No focused pattern study yet.",
+      "versions": {
+        "effect": "4.0.2",
+        "alchemy": "2.0.0-beta.81",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "Consensys/c0",
+      "tier": "B",
+      "reason": "Cloudflare agent deployment shares Effect and Alchemy. No focused pattern study yet.",
+      "versions": {
+        "effect": "4.0.0-beta.100",
+        "alchemy": "2.0.0-beta.67",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "danieljvdm/effect-agent",
+      "tier": "B",
+      "reason": "Shared Effect and Alchemy catalog pins warrant tailing; no study recorded yet.",
+      "versions": {
+        "effect": "4.0.5",
+        "alchemy": "2.0.0-beta.80",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "danieljvdm/effect-cf",
+      "tier": "B",
+      "reason": "Effect packages and Alchemy pipeline tooling warrant tailing; no study recorded yet.",
+      "versions": {
+        "effect": "4.0.0 (locked from ^4.0.0); tooling 4.0.0",
+        "alchemy": "2.0.0-beta.72 (pipeline tooling)",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "davidkpiano/rivet-xstate",
+      "tier": "B",
+      "reason": "XState 6 pure transitions inside persisted Rivet actors are a relevant durability seam; not yet studied.",
+      "versions": {
+        "effect": "—",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.21",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "deathbyknowledge/gsv",
+      "tier": "B",
+      "reason": "Distributed personal-computer deployment shares Effect and Alchemy. No focused pattern study yet.",
+      "versions": {
+        "effect": "4.0.5",
+        "alchemy": "2.0.0-beta.83",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "Ernxst/veyor",
+      "tier": "B",
+      "reason": "Typed software-factory workflows share Effect 4 and XState 6 in core; worth tailing, not yet studied.",
+      "versions": {
+        "effect": "4.0.0-beta.103",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.27",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "gjermundgaraba/clankerbox",
+      "tier": "B",
+      "reason": "Studied declared lifecycle actors; older fromEffect callbacks are not compatible examples for our bridge pin.",
+      "versions": {
+        "effect": "4.0.5 (catalog)",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.66 (catalog)",
+        "xstateEffect": "0.1.0-alpha.7 (catalog)"
+      }
+    },
+    {
+      "repo": "Hebilicious/heb-stack",
+      "tier": "B",
+      "reason": "Studied re-entry and retry in its check machine; older fromEffect API requires migration before reuse.",
+      "versions": {
+        "effect": "4.0.0 (catalog)",
+        "alchemy": "2.0.0-beta.81 (catalog)",
+        "xstate": "6.0.0-alpha.63 (catalog)",
+        "xstateEffect": "0.1.0-alpha.6 (catalog)"
+      }
+    },
+    {
+      "repo": "Heilonng23/openheard",
+      "tier": "B",
+      "reason": "Its infra package declares both shared lines; no study recorded yet.",
+      "versions": {
+        "effect": "4.0.0-rc.112",
+        "alchemy": "2.0.0-beta.75",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "humanlayer/fold",
+      "tier": "B",
+      "reason": "New discovery: its Cloudflare example shares Effect and Alchemy catalogs; not yet studied.",
+      "versions": {
+        "alchemy": "2.0.0-beta.80",
+        "effect": "4.0.0",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "irfndi/prism-liquidity-agent",
+      "tier": "B",
+      "reason": "Effect and Cloudflare Alchemy manifests warrant tailing; no study recorded yet.",
+      "versions": {
+        "effect": "Root 4.0.0-rc.111; Cloudflare 4.0.0-beta.105; infra 4.0.0-beta.102",
+        "alchemy": "2.0.0-beta.64",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "joelhooks/expanded-cinema",
+      "tier": "B",
+      "reason": "Active melt-01 app pins Effect 4 and XState 6, with Alchemy infra; archived experiment pins are excluded.",
+      "versions": {
+        "effect": "4.0.2",
+        "alchemy": "2.0.0-beta.81",
+        "xstate": "6.0.0-alpha.53",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "journeyWorker/lute",
+      "tier": "B",
+      "reason": "Studied pure player interaction statechart; useful XState seam, not an Effect actor migration example.",
+      "versions": {
+        "effect": "4.0.2 (player development and peer pin)",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.65",
+        "xstateEffect": "0.1.0-alpha.7"
+      }
+    },
+    {
+      "repo": "julia-script/graph-engineering",
+      "tier": "B",
+      "reason": "Effect 4 CLI and XState 6 runtime for durable engineering workflows share our lifecycle seam; not yet studied.",
+      "versions": {
+        "effect": "4.0.0-rc.112",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.50",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "krl-gr/upcomputer",
+      "tier": "B",
+      "reason": "Its coding-agent control plane uses an Effect catalog and Alchemy relay. No focused pattern study yet.",
+      "versions": {
+        "effect": "4.0.5 (catalog)",
+        "alchemy": "2.0.0-beta.80",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "Manzanita-Research/frontier-lab-tycoon",
+      "tier": "B",
+      "reason": "A browser tycoon game combines Effect, XState, and the bridge. No focused pattern study yet.",
+      "versions": {
+        "effect": "4.0.0-rc.118",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.62",
+        "xstateEffect": "0.1.0-alpha.5"
+      }
+    },
+    {
+      "repo": "mshubitidze/pi-cf",
+      "tier": "B",
+      "reason": "Own application manifest and lock share all four families; vendored repos excluded from version evidence.",
+      "versions": {
+        "effect": "4.0.0",
+        "alchemy": "2.0.0-beta.81",
+        "xstate": "6.0.0-alpha.65",
+        "xstateEffect": "0.1.0-alpha.7"
+      }
+    },
+    {
+      "repo": "nexmoe/DayBee",
+      "tier": "B",
+      "reason": "Its web app declares an Effect-native Alchemy asset Worker. Worth following; no new lifecycle pattern adopted.",
+      "versions": {
+        "effect": "4.0.5",
+        "alchemy": "2.0.0-beta.83",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "opennookorg/betterwispr",
+      "tier": "B",
+      "reason": "Its frontend infra connects an Effect-native Alchemy server Worker and Vite website. Worth following; no new lifecycle pattern adopted.",
+      "versions": {
+        "effect": "4.0.0",
+        "alchemy": "2.0.0-beta.80",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "OzakIOne/vitesakuga",
+      "tier": "B",
+      "reason": "TanStack application shares Effect 4, Alchemy 2 and locked XState 6; worth tailing, not yet studied.",
+      "versions": {
+        "effect": "4.0.0",
+        "alchemy": "2.0.0-beta.79",
+        "xstate": "6.0.0-alpha.63 (locked from ^6.0.0-alpha.63)",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "pinebasedev/svelteflare",
+      "tier": "B",
+      "reason": "SvelteKit and Cloudflare tooling shares Effect and Alchemy. No focused pattern study yet.",
+      "versions": {
+        "effect": "4.0.0-rc.117",
+        "alchemy": "2.0.0-beta.79",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "pkishorez/monorepo",
+      "tier": "B",
+      "reason": "The current catalog keeps Effect and Alchemy but removes XState and its bridge. The web platform remains relevant; no focused study yet.",
+      "versions": {
+        "effect": "4.0.0 (catalog)",
+        "alchemy": "2.0.0-beta.80 (catalog)",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "plannotator/artifact-server",
+      "tier": "B",
+      "reason": "Its Cloudflare deploy package shares Effect and Alchemy; no study recorded yet.",
+      "versions": {
+        "effect": "4.0.0-rc.115",
+        "alchemy": "2.0.0-beta.79",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "restatedev/xstate-transitions",
+      "tier": "B",
+      "reason": "XState 6 pure transitions as Restate virtual objects are a relevant replay/durability seam; not yet studied.",
+      "versions": {
+        "effect": "—",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.48 (workspace catalog)",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "samyakkkk/flow",
+      "tier": "B",
+      "reason": "Agent tooling shares an Effect catalog and Alchemy relay. No focused pattern study yet.",
+      "versions": {
+        "effect": "4.0.0-beta.103 (catalog)",
+        "alchemy": "2.0.0-beta.65",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "SandroMaglione/mai-macros",
+      "tier": "B",
+      "reason": "Application-owned machines package pins Effect 4 and XState 6; vendored .repos mirrors are excluded.",
+      "versions": {
+        "effect": "4.0.0-rc.112",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.18",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "statelyai/agent",
+      "tier": "B",
+      "reason": "XState 6 agent control-flow and typed request boundary are relevant; no adoption or focused study recorded.",
+      "versions": {
+        "effect": "—",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.64 (development and peer pin)",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "statelyai/jevspresso",
+      "tier": "B",
+      "reason": "A public espresso-machine project builds on XState 6. No focused pattern study yet.",
+      "versions": {
+        "effect": "—",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.58 (root pin); ^6.0.0-alpha.58 (library peer)",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "statelyai/schema",
+      "tier": "B",
+      "reason": "Statechart schema conversion on XState 6 is a relevant typed-machine seam; not yet studied.",
+      "versions": {
+        "effect": "—",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.25",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "sybil-solutions/local-studio",
+      "tier": "B",
+      "reason": "Shared Effect and Alchemy relay pins; no runtime study recorded yet.",
+      "versions": {
+        "effect": "4.0.0-rc.115 (catalog and patched lock)",
+        "alchemy": "2.0.0-beta.79 (patched lock)",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "taucad/tau",
+      "tier": "B",
+      "reason": "The CAD platform uses a shared XState 6 catalog across host and agent packages. No focused pattern study yet.",
+      "versions": {
+        "effect": "—",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.59 (catalog)",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "yehudacohen/typekro",
+      "tier": "B",
+      "reason": "Its root manifest declares both shared lines; no study recorded yet.",
+      "versions": {
+        "effect": "4.0.0-rc.110",
+        "alchemy": "2.0.0-beta.74",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "yielded-dev/auth",
+      "tier": "B",
+      "reason": "Composable Effect authentication and Alchemy tooling share the stack lines. No focused pattern study yet.",
+      "versions": {
+        "effect": "4.0.5 (catalog); auth peer ^4.0.3",
+        "alchemy": "2.0.0-beta.80",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "13kparkin/Pivot",
+      "tier": "C",
+      "reason": "Screened PlanetScale and Hyperdrive wiring. The T3Code study remains the clearer reference for that seam.",
+      "versions": {
+        "effect": "4.0.0-beta.103 (catalog)",
+        "alchemy": "2.0.0-beta.65",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "cameronapak/dotflowy",
+      "tier": "C",
+      "reason": "Screened: Better Auth but no Alchemy integration useful to the studied lane.",
+      "versions": {
+        "effect": "4.0.0",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.12",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "Dhravya/radish",
+      "tier": "C",
+      "reason": "Symbol-screened without a relevant client or resource pattern in the recorded study.",
+      "versions": {
+        "effect": "4.0.0-rc.112",
+        "alchemy": "2.0.0-beta.77 (locked from ^2.0.0-beta.77)",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "dmmulroy/overseer",
+      "tier": "C",
+      "reason": "Symbol-screened without a relevant client or resource pattern in the recorded study.",
+      "versions": {
+        "effect": "4.0.0-rc.112",
+        "alchemy": "2.0.0-beta.76",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "elianiva/elianiva.com",
+      "tier": "C",
+      "reason": "Screened its Website stack. The upstream example remains the stronger resource reference despite newer pins.",
+      "versions": {
+        "effect": "4.0.4",
+        "alchemy": "2.0.0-beta.83",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "every-app/open-seo",
+      "tier": "C",
+      "reason": "Studied auth and database selection. Runtime provider switching remains a rejected pattern for our cartridge boundary.",
+      "versions": {
+        "effect": "4.0.0-beta.93",
+        "alchemy": "2.0.0-beta.61",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "imaimai17468/imaimai-front-templete",
+      "tier": "C",
+      "reason": "Current Effect and Alchemy pins in a frontend template. No closer lifecycle or cartridge pattern identified.",
+      "versions": {
+        "effect": "4.0.0",
+        "alchemy": "2.0.0-beta.81",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "instructa/planr",
+      "tier": "C",
+      "reason": "Earlier symbol screening found no relevant client or resource pattern. Its site deployment keeps older Effect and Alchemy pins.",
+      "versions": {
+        "effect": "4.0.0-beta.98",
+        "alchemy": "2.0.0-beta.63",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "jonbeckman/solstatus",
+      "tier": "C",
+      "reason": "Screened Website, D1, and auth shapes. Newer pins do not add a stronger pattern than the upstream study.",
+      "versions": {
+        "effect": "4.0.5",
+        "alchemy": "2.0.0-beta.83",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "monaxovdulov/tutu-diff-hackaton",
+      "tier": "C",
+      "reason": "Screened: travel-demo UI uses XState 6, but no Effect lifecycle integration in its project manifest.",
+      "versions": {
+        "effect": "—",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.40",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "oscarmarina/blockquote-web-components",
+      "tier": "C",
+      "reason": "Screened: Web Component controller pins XState 6, but no Effect or server lifecycle seam in inspected manifests.",
+      "versions": {
+        "effect": "—",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.65 (locked from ^6.0.0-alpha.65)",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "SMILEY4/strategy-game",
+      "tier": "C",
+      "reason": "Screened: browser strategy-game UI pins XState 6; no Effect integration in its webapp manifest.",
+      "versions": {
+        "effect": "—",
+        "alchemy": "—",
+        "xstate": "6.0.0-alpha.49 (locked from ^6.0.0-alpha.49)",
+        "xstateEffect": "—"
+      }
+    },
+    {
+      "repo": "zonko-ai/harbor-sdk",
+      "tier": "E",
+      "reason": "Last commit June 5. Earlier symbol screening found no relevant client or resource pattern for this upgrade.",
+      "versions": {
+        "effect": "4.0.0-beta.66 (tooling catalog); 4.0.0-beta.70 (SDK peer)",
+        "alchemy": "2.0.0-beta.44",
+        "xstate": "—",
+        "xstateEffect": "—"
+      }
+    }
+  ],
+  "checked": "2026-10-20",
+  "counts": {
+    "S": 3,
+    "A": 5,
+    "B": 36,
+    "C": 12,
+    "E": 1
+  },
+  "tierChanges": [],
+  "versionChanges": [
+    {
+      "repo": "jonbeckman/solstatus",
+      "effect": "4.0.0-beta.107 → 4.0.5",
+      "alchemy": "2.0.0-beta.72 → 2.0.0-beta.83"
+    },
+    {
+      "repo": "pkishorez/monorepo",
+      "xstate": "6.0.0-alpha.64 catalog removed",
+      "xstateEffect": "0.1.0-alpha.6 catalog removed"
+    }
+  ],
+  "newPeers": ["nexmoe/DayBee", "opennookorg/betterwispr"],
+  "evidence": [
+    {
+      "repo": "alchemy-run/alchemy",
+      "previousCommit": "9e3c0584342d67b24a4215f931047aabd230327b",
+      "files": [
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "8c78e4f420a009fbf511aa6ec2369ec004f8ea53f80b156fdbc641ca4dd26824",
+          "changed": false
+        },
+        {
+          "path": "packages/alchemy/package.json",
+          "sha256": "d4a47aaa4e5885f96079a98cbf8c88713361af7a29cae5942867206bdfe1f0ce",
+          "changed": true
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "68a04c07f439d912d37bc2692125553a6671febe",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "MapleTechLabs/maple",
+      "previousCommit": "27a645c2af8d9f021391153b8eb079400d123183",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "baebd3220ff022982ea0e9eb43faf46c34e6fc14ecde0e2f1a930193ccdd49f1",
+          "changed": true
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "1347c9250179676dbd8730b32d26863a03dfa142",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "pingdotgg/t3code",
+      "previousCommit": "3ff5b3c82a62baddc0c2b1b227e9d3a06190c426",
+      "files": [
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "6fd68883489c9e7b99e55efc170b00077e1b34e1f8dd2a933c5d88343351f558",
+          "changed": true
+        },
+        {
+          "path": "infra/relay/package.json",
+          "sha256": "a8a11cbddb8ad861cb9d7c2747f662175d0f845ad6f9cfe3cf4b5512149800db",
+          "changed": true
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "41b513d99aac6ba4d4a4000a3a3a1320b0f79dad",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "smithersai/smithers",
+      "previousCommit": "915058c57393e1939d382798f644fce0f20dbc48",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "32b128ab549c826e79ff8137a640e542c32b77ffea28633e9469fc6673a11a7f",
+          "changed": true
+        },
+        {
+          "path": "packages/smithers/build/infra/package.json",
+          "sha256": "6e8c29b62722794dbaff8f53ba2af5dfa6ccdad86fe37c9d5eeb6f697a2a1ed8",
+          "changed": true
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "a8a6024e48fb5f175354b917b044bcac49a4bc18",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "851-labs/tokenmaxxing",
+      "previousCommit": "0abd5b947dbe6582423e14f0f49395c6b96d9f12",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "02c0360628b9285def9c9b048225e9114c40d5f39eea07260bff55557241680a",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "0abd5b947dbe6582423e14f0f49395c6b96d9f12",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "danieljvdm/effect-agent",
+      "previousCommit": "1866af9f9ec153f7db0ba56d76082e9a34a2e660",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "565e674db68c480eb939a4a3cabc0a67a6cf9ada62454ef6b485e30120c7891c",
+          "changed": true
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "37df331ac30580c982953672199b7977724ae865",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "danieljvdm/effect-cf",
+      "previousCommit": "2d0f556c29101cdcea98890d1151a063eefe7fbf",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "c467dd0e1d6d3dcbc21364e00f472cec4f2b86366f7c40ad685c870692b77c1d",
+          "changed": false
+        },
+        {
+          "path": "bun.lock",
+          "sha256": "2f64218e29698fd4f69ad8391e211c89eee17c308b6c74021054a52eb3e9eab3",
+          "changed": false
+        },
+        {
+          "path": "scripts/bundle-pipelines/package.json",
+          "sha256": "ac88a9bdaed12afdd165a9171147db2ea59e2d124e580caa465e1898bb337f5e",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "5aef6804d7dc648982020013a4f53365991db852",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "Heilonng23/openheard",
+      "previousCommit": "43768281ebf2b27c44fb91f950f9498e69f3c827",
+      "files": [
+        {
+          "path": "packages/infra/package.json",
+          "sha256": "238cfc32376be58271a7fcd286e461e516bd705083c69d74fd35049ad3fc593e",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "43768281ebf2b27c44fb91f950f9498e69f3c827",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "irfndi/prism-liquidity-agent",
+      "previousCommit": "d15c63ef7a5d426ad71f4bbf4dae05c94ba0bc02",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "cbbea9ce792f5562cfb57c8349745960efad973a525705a2cfc7a508cbed9260",
+          "changed": false
+        },
+        {
+          "path": "cloudflare/package.json",
+          "sha256": "5436dc3283c81a7982e968d4c7fd8bf0d7f66fa55bfb8052c4fb045c68b5fbde",
+          "changed": false
+        },
+        {
+          "path": "cloudflare/infra/package.json",
+          "sha256": "b9e0a2463bbcaeac5c3a95b4c91f7d068da1dcd3c6285177b2942da3fe10b21f",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "d15c63ef7a5d426ad71f4bbf4dae05c94ba0bc02",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "plannotator/artifact-server",
+      "previousCommit": "5af28ac3e52228e7f1781270ead712148fb583cc",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "bf0611e74e67b1f93defadde35b3eb3cc0cdda59076a9aaebdf6186670ab6d08",
+          "changed": false
+        },
+        {
+          "path": "deploy/cloudflare/package.json",
+          "sha256": "345df10ca80ca0c6659d0fd7bbf1bde4f6afaef6dc0a43e14b816a97b5621cef",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "5af28ac3e52228e7f1781270ead712148fb583cc",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "yehudacohen/typekro",
+      "previousCommit": "c93e43da652ccda4203c807f4cd8328273b681ce",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "06ebefe3a4d3f7f18be494688af45d9244b8ce3eb8fb9183923e8c5bb4f6d293",
+          "changed": false
+        }
+      ],
+      "branch": "master",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "c93e43da652ccda4203c807f4cd8328273b681ce",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "cameronapak/dotflowy",
+      "previousCommit": "a2378feb6bbb9a75e49759b55b407903d41ea11f",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "be3b0eaa28a671abb9429a87e66da5031203da755114a40318e2fce14a9d65f8",
+          "changed": true
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "534bc55869b3bdfec274d5b386a10e3669562ae2",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "Dhravya/radish",
+      "previousCommit": "98768e8124ca24ec3f76211daa45290392f6eefa",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "0d0ad0bc25f4670f06cc681f24fd23d812c215ee27386cfefa090ff11afe1812",
+          "changed": false
+        },
+        {
+          "path": "bun.lock",
+          "sha256": "56db4931a84319e2868b4cc3c1d1802bf00259bb32ae96cf8c4579057c61dce0",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "98768e8124ca24ec3f76211daa45290392f6eefa",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "dmmulroy/overseer",
+      "previousCommit": "9810d13bb930144ba92a00bc99401fcb886cb8e7",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "1a88ad5db414d11af4b923bc7b9f6101b1e02f59308acaef3ee9b78d50b29477",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "9810d13bb930144ba92a00bc99401fcb886cb8e7",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "humanlayer/fold",
+      "previousCommit": "4bd8c58c4c644ad43df573c156ecdf8bddedd04d",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "e506c37a8e266a84065c7684448a1a59c6953628a0e21619b474c8a4f3c642cb",
+          "changed": false
+        },
+        {
+          "path": "examples/alchemy-cloudflare/package.json",
+          "sha256": "a0bc0df393018e92fba5dc9440ed3fdf3eabe492f164f9057df76975d982fa31",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "4bd8c58c4c644ad43df573c156ecdf8bddedd04d",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "BleedingDev/dx-feature-tracker",
+      "previousCommit": "c9c91fc159f77cab19869e24afc590923c73c166",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "cf3ec35a7d15f6938dd81cd240377211d84a61a902fdfd70ca5a0bd9324adfaa",
+          "changed": false
+        },
+        {
+          "path": "packages/core/package.json",
+          "sha256": "8426dfb8e54b9724989080afb08b8943fae9d5750c4bbaca64e6834818c02f79",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "5f359d7143d0ca39fb346340d7ae6eaa65ce42cd2a9dcd63d879c1b7276ca217",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "01c7e34ba03d92981c40b02c7c14f45c402717941454c3a6703c1f9530322c3f",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "c9c91fc159f77cab19869e24afc590923c73c166",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "statelyai/agent",
+      "previousCommit": "2c7934066a2dfe1f302271f101bca4459f20dbf2",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "16c2c6b697db6dd6136c9e2c5be5080452d111210c43f56213662270762fcc42",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "55b8a57b1daeeef7f8190cda5aa14933f86f6b90c4e4885b9681ad5a1faf1ec2",
+          "changed": false
+        },
+        {
+          "path": "readme.md",
+          "sha256": "29acfaa7f44f8e863a4a71a4cfa73f00c588f2f68659e0463d54794a4084b3f7",
+          "changed": true
+        }
+      ],
+      "branch": "next",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "5a783809135423382f8f61e919083f011b5c122a",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "statelyai/schema",
+      "previousCommit": "f08e45a242548425e9d2a5a58b868729ee5c9e20",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "1e4e75f8640563c88d6ac3fc38b82a9cbf4ab0dfd688a06610768cf9e0c60af6",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "3909c11c429ed8f45f784809627de2bcc6fccb621ee34bc48a48c99543514b2c",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "9e64333eea92ed35a32a25648df4726841c56b5f7de6f273ac00039454e15bf0",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "f08e45a242548425e9d2a5a58b868729ee5c9e20",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "davidkpiano/rivet-xstate",
+      "previousCommit": "ee63b77248c99f2cd77a1323516f9d900c4f17cc",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "c29798d413e873e862b4e391c5a7028881db890cd415469c5a0424c7b0a6690c",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "eca375153340dd5b13d364437cb6338c92788774a6fa67e24ad90f368882d0a5",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "5261419cd63e4895ab647c9db17c9a2bd8fa69707ddb37bd3e9de749b42efbfb",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "ee63b77248c99f2cd77a1323516f9d900c4f17cc",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "restatedev/xstate-transitions",
+      "previousCommit": "359a47ca8c82deae14f1ef3178469d7a81d6fc53",
+      "files": [
+        {
+          "path": "packages/xstate-transitions/package.json",
+          "sha256": "9abb7c064b87b134cc55825e94bad70f943f6793212462c3397a235c19ebc62b",
+          "changed": false
+        },
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "b8cfd05c07291ce02ff8166446174f01951d6a175138075bca08460ad3fd96ec",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "1a2d54f77ca8f290052c45769ae1c21069e368f90e6df58e230a8ab796aa2b77",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "b1659467854e4967812b8e91479302af370253b148bbf791092ac998854c9c26",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "359a47ca8c82deae14f1ef3178469d7a81d6fc53",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "julia-script/graph-engineering",
+      "previousCommit": "0748374f7816725543b33eff8ba2f808e58b5a25",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "6508b848a61b011f237ad081e8e3ab6512a648badea81ffaaabb322a57444efb",
+          "changed": false
+        },
+        {
+          "path": "packages/runtime/package.json",
+          "sha256": "fc084a6d15e319a8e0c1475c69a1bcff08f54bbed1da1d069f05ef935b108a20",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "55eb2e77db9467c4e15b07206bbe22bf57575cdc3231f8c3ac99b50baf7f8a05",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "1c21d815ecae9e3f65b0fad8196769204462739af598bed3f61685ac97165155",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "0748374f7816725543b33eff8ba2f808e58b5a25",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "SandroMaglione/mai-macros",
+      "previousCommit": "d2f53266d88d9dd235f8171cfdfbbdede8597739",
+      "files": [
+        {
+          "path": "apps/mobile/package.json",
+          "sha256": "3e199069d7e44f9626fd2c8abd7249cd916c9851b8f9ed11462edb82c829cfb4",
+          "changed": false
+        },
+        {
+          "path": "packages/machines/package.json",
+          "sha256": "2a8cde4ce2c86201b924a5cdad6a32d76146d8b12f33fcbe348502bbdaf7a529",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "d83e6ccf3af50dd35117519de3b813095663e7adfddde8a195e14cd83c0e2058",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "d2f53266d88d9dd235f8171cfdfbbdede8597739",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "Ernxst/veyor",
+      "previousCommit": "d547e3f8286b09c9f0464e25c18f0ebee22f1868",
+      "files": [
+        {
+          "path": "packages/core/package.json",
+          "sha256": "66294eb47f34ba1dce086bde2f1afbbaaba322eeeb144ed56409a820649adc91",
+          "changed": false
+        },
+        {
+          "path": "bun.lock",
+          "sha256": "8dbc02122bbea74b21a79a57b08ea8bf693543b955c269f0b9eba7c37e8ad550",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "5f94cb9fa1e12c2cd29a996b82f1abcf95a36329cf45e7c99f015c55e4f79d5a",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "d547e3f8286b09c9f0464e25c18f0ebee22f1868",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "joelhooks/expanded-cinema",
+      "previousCommit": "dde1941d5cf6617bc6d05145b176d4a0acc32864",
+      "files": [
+        {
+          "path": "apps/melt-01/package.json",
+          "sha256": "38f803622e942704cbeb321705d9271920918565155105ced95636d939dc01cc",
+          "changed": false
+        },
+        {
+          "path": "packages/infra/package.json",
+          "sha256": "da9a8803b0132dd8e8dcb17e477e69561178146ae9111bcaa2ca503bffc6c65b",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "c1291ffc0fb81db5d1b48a210f69b437e2b49f5e769816423d37005b0ebdd88e",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "23046cf7acf995af9e5e2a8b9ba461c50e541632d43f3d1af412a5c1cd6e35dd",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "dde1941d5cf6617bc6d05145b176d4a0acc32864",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "OzakIOne/vitesakuga",
+      "previousCommit": "ab7b7364ed1b47f0457d43038db721e0159f8712",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "02a4601169971321adc8ed7c4cf81214b3227750118dcc0b5e45f69461e34063",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "43b504a2ca8f8d8142cc27b223cb95ecb49382f02f8e81b8cb01fcc6db283033",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "c16843f1bcc384aa9e48e139c382819c52166ba3ce9a525cb4cb1b66b3450bcb",
+          "changed": false
+        }
+      ],
+      "branch": "master",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "ab7b7364ed1b47f0457d43038db721e0159f8712",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "oscarmarina/blockquote-web-components",
+      "previousCommit": "3de41e7a416380c42f6079678b648f9e4ebc5ae0",
+      "files": [
+        {
+          "path": "packages/controllers/blockquote-controller-xstate/package.json",
+          "sha256": "3b03c0e25e9d0a1f42f5f026756826bb80877563c475c4fa7c94f57c2d2143df",
+          "changed": false
+        },
+        {
+          "path": "package-lock.json",
+          "sha256": "d71e748f28029b65e960159e40d846faeea799fee7fc5c24e6496179e1e000f4",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "3ab08f6255c8c2fad5cffd63a3d4ef5de2e596d1aa11a8d3631635b68e4ab7bc",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "3de41e7a416380c42f6079678b648f9e4ebc5ae0",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "SMILEY4/strategy-game",
+      "previousCommit": "6df0f9e86a1794b19a85cbe47d2a8a32e3d42409",
+      "files": [
+        {
+          "path": "webapp/package.json",
+          "sha256": "4eb8554d38978f09301de0f1fb577f43dd1a31046b02978f073432c42775220d",
+          "changed": false
+        },
+        {
+          "path": "webapp/package-lock.json",
+          "sha256": "fd216137150d86a24e8b708d839291014582f2d2be7784dbc2912a4c66c4da5b",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "e7b5345d6ba9118d98669e0a985943b430bef860a767b01d5260d4dbca7370e0",
+          "changed": false
+        }
+      ],
+      "branch": "develop",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "6df0f9e86a1794b19a85cbe47d2a8a32e3d42409",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "monaxovdulov/tutu-diff-hackaton",
+      "previousCommit": "62da1ea88a08327f9d0277eb422b10cc44c6eb57",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "a9a5fdaa30a10431d5bd575ee5d2d1f39596a0ea1cb5860d40910a4e325166ec",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "e30d12c57b18c2eb9cf22ca2366658e1a4926c95219e0a17e75ffba41a36c7d8",
+          "changed": false
+        },
+        {
+          "path": "README.md",
+          "sha256": "ced27418a4b1203d036dd6115a1ad0e2743054fec0bd7c5238b85646395b9f95",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "62da1ea88a08327f9d0277eb422b10cc44c6eb57",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "beep-effect/beep-effect",
+      "previousCommit": "18e322389b916214847f851b9df205e3a8824bb6",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "2a9acc727dec36494eaf6cfea8ce7002b6b74f306b99f7d4480f4e26691d6ab2",
+          "changed": false
+        },
+        {
+          "path": "packages/drivers/xstate/package.json",
+          "sha256": "cc8846f33690d4029e6eeb93bdf8afa93fded73680b4d25ad27101db2b79e699",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "c6d2656bfe1978d62a5a548414b08332a303425d",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "foldkit/foldkit",
+      "previousCommit": "76fa0d1ee2a5f9d06333e83a1ee381eab0ed37d5",
+      "files": [
+        {
+          "path": "packages/foldkit/package.json",
+          "sha256": "1c137371b6bd2725b447c2162868aecf794ae870f890c52ff1f3622b78b1b98d",
+          "changed": false
+        },
+        {
+          "path": "packages/vite-plugin-foldkit/package.json",
+          "sha256": "2b2fb329ea369b94b6ac541fa0ac5229d6d826447ada118598c5aba9d47aae8f",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "76fa0d1ee2a5f9d06333e83a1ee381eab0ed37d5",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "just-be-dev/effect-cloudflare-foldkit-template",
+      "previousCommit": "55f123ac37fa0bfb31c0400c8cba2aee5212dd30",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "62be1782b3c562f83488bd2b37d290277632bea94f1563bc0fc9705d58cbaa85",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "b1f4451b2ca191048e10cda717f4c31175ad6dc6",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "jonbeckman/solstatus",
+      "previousCommit": "c0e79b645d95ca02bccf3130e97be53775c1b2e0",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "160d1ac222166d91883ea9ae1cfefd8deabf21f3c493bd1e66301271116df124",
+          "changed": true
+        }
+      ],
+      "branch": "master",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "394c4f00673cbd8aaf0df96ac464b825f27f861d",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "yielded-dev/auth",
+      "previousCommit": "72bfeeb07ad2d8f3434e22a1dd9e55debd3104e5",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "f1ba802e6768c454af22520dd58d7850f50788afc3e2f0165fd1c61671f2b819",
+          "changed": true
+        },
+        {
+          "path": "packages/auth/package.json",
+          "sha256": "a050feb16e9a1d5d6eb14473eda86b55ef8bb4246539b97713f3b59b0bb77fb2",
+          "changed": true
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "bcbf17a4781dc73759c4c7300c32c112b8639523",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "Consensys/c0",
+      "previousCommit": "e7a18101f646b72a4008e6da2a1a507afc8b93d3",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "bb80dedeaa0e5327e90eceb55fd8af3509c823e89ea0ff369f8fd2bf452bd5d3",
+          "changed": false
+        },
+        {
+          "path": "packages/infra/package.json",
+          "sha256": "79047feab64a31e9dc72d45100cd8ff4e4d3e593c5650f8bffaf16e95ce8b03d",
+          "changed": false
+        }
+      ],
+      "branch": "master",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "e7a18101f646b72a4008e6da2a1a507afc8b93d3",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "krl-gr/upcomputer",
+      "previousCommit": "87ba96328add71ed358fe5b334e3bfa792259cc7",
+      "files": [
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "3000e33ebb6cfa14a86399b230f95cf761c504c2207a5045da865b4cc2b0a6da",
+          "changed": false
+        },
+        {
+          "path": "infra/relay/package.json",
+          "sha256": "a9054722d3b01660977a057559459a64cf077daac5f07ff21aaeb90604b41045",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "eee287a5558739cd93a6fbccd329ef76c4f354c1",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "imaimai17468/imaimai-front-templete",
+      "previousCommit": "52d919d4a5f852dec80238aafa470a5041cb45e4",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "d4ffb7a2616fa021f9399eb13d12d7f5e5206742bac3abeb326d0dead6d04e11",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "52d919d4a5f852dec80238aafa470a5041cb45e4",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "samyakkkk/flow",
+      "previousCommit": "5d7e942fe32438c09ac3dd137961f4b122e7115f",
+      "files": [
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "880f9e5a729c80c194dd5c31ab1cedd5550584555a6d667436ba7f53382bc5bd",
+          "changed": false
+        },
+        {
+          "path": "infra/relay/package.json",
+          "sha256": "3369744ccf6081d3fe88061ff164b28479450b1a3a8b02ec85523e90e42a13cd",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "5d7e942fe32438c09ac3dd137961f4b122e7115f",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "13kparkin/Pivot",
+      "previousCommit": "1887824d1f96ea6b601fffbc283b836967d32a5c",
+      "files": [
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "2f9b327e0a6d57e676f0def77c45aa2ea56b3009853bb5a101bf1d2a535b4231",
+          "changed": false
+        },
+        {
+          "path": "infra/relay/package.json",
+          "sha256": "3369744ccf6081d3fe88061ff164b28479450b1a3a8b02ec85523e90e42a13cd",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "1887824d1f96ea6b601fffbc283b836967d32a5c",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "pinebasedev/svelteflare",
+      "previousCommit": "a7c56be8e1ea84b37229842191ef935941a96af6",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "80679ab4c1e110be49fdc24a85decff6a00de08d21bff8586003921a5ec5b156",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "a7c56be8e1ea84b37229842191ef935941a96af6",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "every-app/open-seo",
+      "previousCommit": "d7ea7852480601af9bc8870942af8311a410e567",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "fa73b36c97bc295cc734295959fbf4593d3a3f30d4bb137c24c993de51aa3950",
+          "changed": true
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "c5f8db19c7ca9e750836b6ed5c8a6491d4f967f4",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "MapleTechLabs/hazel",
+      "previousCommit": "4fb8080d3c5ae4704ffb37b200f9ff188a0ef865",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "60b4106e5f40cb59ccab3c10700b5b69331017150313e9c99a1b91ead9087899",
+          "changed": false
+        },
+        {
+          "path": "apps/web-foldkit/package.json",
+          "sha256": "30272d22b701002f706b7caae545f3739307bc75a1b68319e0e20ab23c33072e",
+          "changed": false
+        },
+        {
+          "path": "bun.lock",
+          "sha256": "e2af0b831e57f8db4daa2f839c7bb142849e52ebb6c4b85612774971261a66b2",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "4fb8080d3c5ae4704ffb37b200f9ff188a0ef865",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "zonko-ai/harbor-sdk",
+      "previousCommit": "c832f374480e3b6ff66b1b4158a7513b69861e45",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "310de638ed671e1aa9016d747630f29d984c93100161ccf75234099670eef862",
+          "changed": false
+        },
+        {
+          "path": "packages/sdk/package.json",
+          "sha256": "8ac461bf3e50abba12896642a10634852ba8a380bb44ba8d671f1b057684263a",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "c832f374480e3b6ff66b1b4158a7513b69861e45",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "elianiva/elianiva.com",
+      "previousCommit": "d996f47d7e4dbffd77cc4237c50fe4fd8febe8c8",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "a8c7a8743e4888470803153fa8c29dbca037ca6e4a577ef42fcb02bfb5b29684",
+          "changed": false
+        }
+      ],
+      "branch": "master",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "946df5a8301f94233a6e999396b33475c98303c2",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "deathbyknowledge/gsv",
+      "previousCommit": "9ffae517f1d33e13734841879fb5f0618ebb2757",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "5f5fa4a0d4f914a8e287a68c884390a716f7196824a55a35b9abd468bfac9f5f",
+          "changed": false
+        },
+        {
+          "path": "deployment/package.json",
+          "sha256": "d6024c9236c590d61c4ca9844ebad7eae06c017a0e3185486d852bd2eb8beb90",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "4a4cf996ebd37470bc88267b176d2443774d9f38",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "chr33s/bye",
+      "previousCommit": "a543bd4b6cdbc263baf095e0299aa0822ed1d346",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "a3d862ec2e07ddef7a638f7409c25df34d366cc63a7e83a2745a9f2d0245e209",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "a543bd4b6cdbc263baf095e0299aa0822ed1d346",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "instructa/planr",
+      "previousCommit": "1d7e31b1b6cf659b313d8c4ec01f5854b27933c8",
+      "files": [
+        {
+          "path": "site/deploy/package.json",
+          "sha256": "df19a38d091354c640f950b678013d9d93e3ac2285b9e533f48b4590068547a9",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "1d7e31b1b6cf659b313d8c4ec01f5854b27933c8",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "pkishorez/monorepo",
+      "previousCommit": "d4c1fb79fb39fed5bab2b750aa1f70c73c1cec78",
+      "files": [
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "5a35a4af7b57aa0592c984b999dbdcb787f1018951dfe3f009b6e520030e7a41",
+          "changed": true
+        },
+        {
+          "path": "platforms/web-platform/package.json",
+          "sha256": "776c6b45e606c6380e58dd6830086c9485bb5bdd3246e59fa34b0bf1f6cf5ca6",
+          "changed": true
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "361dd6e25b3ce03f7a2c3b3f9f0e4c16232b2856b6674d0bc3a0425677d7e893",
+          "changed": true
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "cfa827be0e6d7d2bfcaac40170d672dbc38eaf38",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "Manzanita-Research/frontier-lab-tycoon",
+      "previousCommit": "e121e117b8dab874b044482499e77d2c58d5c2b6",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "cef1d2b117c174977ebc3e2816956cc640bd41790eac500f6d603941bdd5ccdd",
+          "changed": false
+        },
+        {
+          "path": "packages/flt-mod-cli/package.json",
+          "sha256": "76f9f78d94c629a71fcdf72bc89dea01c2df1c2e0362348255aa93c7a31ce4cf",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "e121e117b8dab874b044482499e77d2c58d5c2b6",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "taucad/tau",
+      "previousCommit": "56ad8e200e4f2b2b6488eaa44f88e85e88e3d9c0",
+      "files": [
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "93a664f2f852451cf2501486395ffa05178dca4e0b912659a76a3f609a689d2f",
+          "changed": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "a38b519502bfa08f2b47b1ebb4aaeb12799bdf3b6c6c4f41abd6301e6014ca69",
+          "changed": true
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "76bd19c57ba7184c9cf9974151ea07129f8efa39",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "statelyai/jevspresso",
+      "previousCommit": "f1def19170ab66634166bfca3491c818760136e0",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "65c017e549488eea6a70704605b28b0fd4620f81d67b905d78264a23a111e245",
+          "changed": false
+        },
+        {
+          "path": "packages/jev/package.json",
+          "sha256": "67fca120db165df3366b5d070e01a9a0774a0e0b1b165af91a58852afb94832a",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "f1def19170ab66634166bfca3491c818760136e0",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "sybil-solutions/local-studio",
+      "previousCommit": "f65c8af78582f741b62546c93d7c66439f0cd5b1",
+      "files": [
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "a4444c06f9b2990fa3dae5f8ee8bff41ae932f712e4ae23453a94e4dcd632afd",
+          "changed": false
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "sha256": "42d6f857aa059b156d6be1e36eb8a2f4ac35cbb3fa0344c62920235dfe7e517f",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "f65c8af78582f741b62546c93d7c66439f0cd5b1",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "Hebilicious/heb-stack",
+      "previousCommit": "278ffefcc0ac89387a8bf73ffbd191a750a887e0",
+      "files": [
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "b74227b7e536275a841aaa8138dec9574f431bb4f7e9a1c7454163159e942f3b",
+          "changed": false
+        },
+        {
+          "path": "packages/primes/package.json",
+          "sha256": "3371bb5a7b3cba0ee8995e16642f7b993871b3a23dfa760e0c0a479be861e283",
+          "changed": false
+        },
+        {
+          "path": "packages/primes/src/check-machine.ts",
+          "sha256": "0662a3f644ab4668cf91389d7e021f3839c7aa5261189de206bd987c29a2f651",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "278ffefcc0ac89387a8bf73ffbd191a750a887e0",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "gjermundgaraba/clankerbox",
+      "previousCommit": "f3aa602b13d588e1b56f9b601a1fac5a94525dba",
+      "files": [
+        {
+          "path": "pnpm-workspace.yaml",
+          "sha256": "403d4074d08ad72bb51d485fd3dc8ea7d5f0a30476e6868c4d4c1d4f3c6fb446",
+          "changed": false
+        },
+        {
+          "path": "packages/host/package.json",
+          "sha256": "5bc612c79e6bafc1c9f83e606f9715e7a825fc0745d129d13dd6426b408c8894",
+          "changed": false
+        },
+        {
+          "path": "packages/host/src/lifecycle.ts",
+          "sha256": "4cb0f619b1860ce5a1c52ec119639ad0c8fb87eefbb209fc413db7e523933b8a",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "f3aa602b13d588e1b56f9b601a1fac5a94525dba",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "mshubitidze/pi-cf",
+      "previousCommit": "9f53b6ef87ffdb2debe0e2c2548597e78f736221",
+      "files": [
+        {
+          "path": "package.json",
+          "sha256": "9a3ff0a7a7e9e627b981caed96b68b502846c42f1a89a127ddd59614e55972c9",
+          "changed": false
+        },
+        {
+          "path": "bun.lock",
+          "sha256": "da0d50af0a72c8489c54066503125b7063b09f4460eb36af0be4a821b7b3b107",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "9f53b6ef87ffdb2debe0e2c2548597e78f736221",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "journeyWorker/lute",
+      "previousCommit": "3e6d8f5da028788b661824950ad41177b79742f6",
+      "files": [
+        {
+          "path": "packages/player/package.json",
+          "sha256": "3730fd3adc1f33cabb46a8cf108562debfe2d1d7907aff94602cbad6655a127f",
+          "changed": true
+        },
+        {
+          "path": "packages/player/src/machine/playerMachine.ts",
+          "sha256": "b629b118b1852dc4aabb1a784d84a94d2ed9e1a4807f5cee5c85658621c0834b",
+          "changed": false
+        }
+      ],
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "archived": false,
+      "mirror": null,
+      "commit": "8c5d0b91db7a594c78166b9175f6f28f991d8450",
+      "checked": "2026-10-20"
+    },
+    {
+      "repo": "nexmoe/DayBee",
+      "checked": "2026-10-20",
+      "commit": "32617052c958cc4d6c18ad27c83ed6987deb79b7",
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "mirror": null,
+      "archived": false,
+      "files": [
+        {
+          "path": "apps/web/package.json",
+          "sha256": "37b3e93c8c8b89d5ca48953e86385bf518cb1823ba39626f0679670d8b49a84a"
+        },
+        {
+          "path": "apps/web/alchemy.run.ts",
+          "sha256": "9c206976b27f854d9a337fc779fd29e18349bb0ca7f327bc75e33a2d3fda4822"
+        },
+        {
+          "path": "bun.lock",
+          "sha256": "ccfbf3895a659729d652fcf1fdb860de8897da438edc5885cd0f46c139923839"
+        }
+      ]
+    },
+    {
+      "repo": "opennookorg/betterwispr",
+      "checked": "2026-10-20",
+      "commit": "4021a0f402bd72eed939e2198d52a93512e56f40",
+      "branch": "main",
+      "private": false,
+      "fork": false,
+      "mirror": null,
+      "archived": false,
+      "files": [
+        {
+          "path": "betterwispr-frontend/packages/infra/package.json",
+          "sha256": "22c00fa26f15b49a833224c0c8605ce25ee0f4ea01adc8b0af4cc6ffd2aae3d4"
+        },
+        {
+          "path": "betterwispr-frontend/packages/infra/alchemy.run.ts",
+          "sha256": "8a433f659bf5cee5a96935494e1607eca5df6a76b916da8e2b4150d1a69bfcf5"
+        }
+      ]
+    }
+  ],
+  "search": {
+    "sourcegraph": {
+      "command": "pnpm find-peers --min 1",
+      "resultCount": 255,
+      "newSharedRuntimeCandidates": [
+        "nexmoe/DayBee",
+        "opennookorg/betterwispr"
+      ],
+      "targeted": [
+        {
+          "query": "context:global file:(package\\.json|pnpm-lock\\.yaml)$ \"@xstate/effect\" count:1000",
+          "checked": "2026-10-20",
+          "matches": [],
+          "completed": true
+        },
+        {
+          "query": "context:global file:package.json xstate \"6.0.0-alpha\" count:1000",
+          "checked": "2026-10-20",
+          "matches": [],
+          "completed": true
+        },
+        {
+          "query": "context:global file:pnpm-lock.yaml xstate \"6.0.0-alpha\" count:1000",
+          "checked": "2026-10-20",
+          "matches": [],
+          "completed": true
+        }
+      ]
+    },
+    "github": {
+      "queries": [
+        "\"@xstate/effect\" filename:package.json",
+        "xstate alpha filename:package.json",
+        "xstate \"6.0.0-alpha\" filename:pnpm-lock.yaml"
+      ],
+      "status": "Public code-search API request for @xstate/effect returned HTTP 401. Remaining GitHub queries were not run without an authorized credential. Search coverage remains bounded."
+    },
+    "screenedNotAdded": [
+      {
+        "repo": "SandroMaglione/getting-started-xstate-and-effect",
+        "commit": "cdd59bf2cf1c189f6e7b3aff9e14dd05d727ddcf",
+        "reason": "Root manifest pins Effect 4.0.0-beta.66 and XState 5.31.1; not a current XState 6 peer."
+      }
+    ]
+  },
+  "adoptions": [],
+  "lintRulesAdded": [],
+  "lintFindingsRemoved": 0,
+  "unresolvedVersions": [],
+  "excerpts": {
+    "referencesChecked": 66,
+    "drift": [],
+    "errors": [],
+    "repinned": 0
+  },
+  "upstream": {
+    "xstate": {
+      "from": "6.0.0-alpha.69",
+      "to": "6.0.0-alpha.70"
+    },
+    "xstateEffect": {
+      "from": "1.0.0-alpha.8",
+      "to": "1.0.0-alpha.9"
+    },
+    "runtimeCallSiteChanges": 0,
+    "lintChanges": 0,
+    "sourceCommit": "c628b91f5f48b022c7ccf9dde1bd408764dd8add",
+    "sourceTagsHaveIdenticalCoreAndBridgeTrees": true,
+    "supplyChain": [
+      {
+        "package": "xstate",
+        "integrity": "sha512-TSFfXYaTNz+ylEpguNsu0L5vDy8cjHRXAqpZBKQnJI++Jm61Vb41TAg1HzeEbC+Mnq9XelKs2dQNOizTwcnssQ==",
+        "tarballIntegrityMatched": true,
+        "fileCount": 207,
+        "scripts": {},
+        "runtimeDependencies": {},
+        "peerDependencies": {},
+        "provenanceRepository": "https://github.com/statelyai/xstate",
+        "provenanceWorkflow": ".github/workflows/publish.yml",
+        "provenanceCommit": "c628b91f5f48b022c7ccf9dde1bd408764dd8add"
+      },
+      {
+        "package": "bridge",
+        "integrity": "sha512-/j88zmjdhbHpBx5klhHIH+Tj8CpT+fb5x0syOKaZIFymPDShgOKwRVtCkz+t1KrX5p4qV4XBEQOCSsmqYnfgqg==",
+        "tarballIntegrityMatched": true,
+        "fileCount": 21,
+        "scripts": {},
+        "runtimeDependencies": {},
+        "peerDependencies": {
+          "effect": "^4.0.0",
+          "xstate": "^6.0.0-alpha.70"
+        },
+        "provenanceRepository": "https://github.com/statelyai/xstate",
+        "provenanceWorkflow": ".github/workflows/publish.yml",
+        "provenanceCommit": "c628b91f5f48b022c7ccf9dde1bd408764dd8add"
+      }
+    ]
+  },
+  "otherPins": {
+    "effect": "4.0.0 held for Foldkit exact peers; registry latest 4.0.5",
+    "alchemy": "2.0.0-beta.83 current",
+    "effectTsgo": "0.54.0 current"
+  },
+  "knownValidationLimits": [
+    "The supplementary Brain extension checker rejects three pre-existing .brain/data/foldkit-0167-audit-*.md receipts. This packet does not change them.",
+    "pnpm peers check reports existing capnp-es/TypeScript and Alchemy Better Auth/Cloudflare worker-types mismatches. The lockfile diff changes only XState and its bridge."
+  ],
+  "principlesApplied": {
+    "keep-the-stack-floor": "Exact family bump; no widened exclusions or fence changes.",
+    "version-content-artifacts": "Compare selected excerpt lines before repinning; all 66 match HEAD.",
+    "store-source-facts": "Keep default-branch commits and source hashes; distinguish failed/empty discovery from absence.",
+    "check-the-actual-artifact": "Measure the bundled entry and run the full gate; no deployment claim."
+  },
+  "baselineEntry": {
+    "worker": "Mischief",
+    "bytes": 828306,
+    "budget": 900000
+  },
+  "unlinkedMentions": "Review generated candidates; link the relevant binding, RPC, pin, and cartridge mentions in the studied peer page (five links). Leave incidental matches unchanged."
+}

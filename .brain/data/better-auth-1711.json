@@ -1,0 +1,110 @@
+{
+  "checked": "2026-10-20",
+  "baselineCommit": "16db4de",
+  "optionsSource": "packages/auth/src/auth-options.ts",
+  "pluginSource": "packages/auth/src/feedback-plugin.ts",
+  "migrationSource": "@alchemy.run/better-auth/src/Migrate.ts",
+  "method": "getSchema(options) and await getMigrations({...options, database, secret: fixture, telemetry:{enabled:false}}).compileMigrations()",
+  "localProviders": {
+    "d1": "Native Better Auth D1 dialect over node:sqlite DatabaseSync facade",
+    "postgres": "Native Better Auth Postgres dialect over PGlite 0.5.10 pool facade"
+  },
+  "vendors": {
+    "d1": {
+      "outputs": {
+        "1.6.2": {
+          "sql": "create table \"user\" (\"id\" text not null primary key, \"name\" text not null, \"email\" text not null unique, \"emailVerified\" integer not null, \"image\" text, \"createdAt\" date not null, \"updatedAt\" date not null);\n\ncreate table \"session\" (\"id\" text not null primary key, \"expiresAt\" date not null, \"token\" text not null unique, \"createdAt\" date not null, \"updatedAt\" date not null, \"ipAddress\" text, \"userAgent\" text, \"userId\" text not null references \"user\" (\"id\") on delete cascade);\n\ncreate table \"account\" (\"id\" text not null primary key, \"accountId\" text not null, \"providerId\" text not null, \"userId\" text not null references \"user\" (\"id\") on delete cascade, \"accessToken\" text, \"refreshToken\" text, \"idToken\" text, \"accessTokenExpiresAt\" date, \"refreshTokenExpiresAt\" date, \"scope\" text, \"password\" text, \"createdAt\" date not null, \"updatedAt\" date not null);\n\ncreate table \"verification\" (\"id\" text not null primary key, \"identifier\" text not null, \"value\" text not null, \"expiresAt\" date not null, \"createdAt\" date not null, \"updatedAt\" date not null);\n\ncreate table \"deviceCode\" (\"id\" text not null primary key, \"deviceCode\" text not null unique, \"userCode\" text not null unique, \"userId\" text, \"expiresAt\" date not null, \"status\" text not null, \"lastPolledAt\" date, \"pollingInterval\" integer, \"clientId\" text, \"scope\" text);\n\ncreate table \"learnFeedback\" (\"id\" text not null primary key, \"cardId\" text not null, \"createdAt\" date not null, \"feedback\" text not null, \"personId\" text not null references \"user\" (\"id\") on delete cascade);\n\ncreate index \"session_userId_idx\" on \"session\" (\"userId\");\n\ncreate index \"account_userId_idx\" on \"account\" (\"userId\");\n\ncreate index \"verification_identifier_idx\" on \"verification\" (\"identifier\");\n",
+          "sha256": "be529602643649ea4b5524c7c16f28548021c25285845fa67183a3cbc1ec2076"
+        },
+        "1.7.11": {
+          "sql": "create table \"user\" (\"id\" text not null primary key, \"name\" text not null, \"email\" text not null unique, \"emailVerified\" integer not null, \"image\" text, \"createdAt\" date not null, \"updatedAt\" date not null);\n\ncreate table \"session\" (\"id\" text not null primary key, \"expiresAt\" date not null, \"token\" text not null unique, \"createdAt\" date not null, \"updatedAt\" date not null, \"ipAddress\" text, \"userAgent\" text, \"userId\" text not null references \"user\" (\"id\") on delete cascade);\n\ncreate table \"account\" (\"id\" text not null primary key, \"accountId\" text not null, \"providerId\" text not null, \"userId\" text not null references \"user\" (\"id\") on delete cascade, \"accessToken\" text, \"refreshToken\" text, \"idToken\" text, \"accessTokenExpiresAt\" date, \"refreshTokenExpiresAt\" date, \"scope\" text, \"password\" text, \"createdAt\" date not null, \"updatedAt\" date not null);\n\ncreate table \"verification\" (\"id\" text not null primary key, \"identifier\" text not null, \"value\" text not null, \"expiresAt\" date not null, \"createdAt\" date not null, \"updatedAt\" date not null);\n\ncreate table \"deviceCode\" (\"id\" text not null primary key, \"deviceCode\" text not null unique, \"userCode\" text not null unique, \"userId\" text, \"expiresAt\" date not null, \"status\" text not null, \"lastPolledAt\" date, \"pollingInterval\" integer, \"clientId\" text, \"scope\" text);\n\ncreate table \"learnFeedback\" (\"id\" text not null primary key, \"cardId\" text not null, \"createdAt\" date not null, \"feedback\" text not null, \"personId\" text not null references \"user\" (\"id\") on delete cascade);\n\ncreate index \"session_userId_idx\" on \"session\" (\"userId\");\n\ncreate index \"account_userId_idx\" on \"account\" (\"userId\");\n\ncreate index \"verification_identifier_idx\" on \"verification\" (\"identifier\");\n",
+          "sha256": "be529602643649ea4b5524c7c16f28548021c25285845fa67183a3cbc1ec2076"
+        }
+      },
+      "diff": "",
+      "upgrade": {
+        "tablesAdded": 0,
+        "columnsAdded": 0,
+        "indexesAdded": 0,
+        "sql": ";\n"
+      }
+    },
+    "postgres": {
+      "outputs": {
+        "1.6.2": {
+          "sql": "create table \"user\" (\"id\" text not null primary key, \"name\" text not null, \"email\" text not null unique, \"emailVerified\" boolean not null, \"image\" text, \"createdAt\" timestamptz default CURRENT_TIMESTAMP not null, \"updatedAt\" timestamptz default CURRENT_TIMESTAMP not null);\n\ncreate table \"session\" (\"id\" text not null primary key, \"expiresAt\" timestamptz not null, \"token\" text not null unique, \"createdAt\" timestamptz default CURRENT_TIMESTAMP not null, \"updatedAt\" timestamptz not null, \"ipAddress\" text, \"userAgent\" text, \"userId\" text not null references \"user\" (\"id\") on delete cascade);\n\ncreate table \"account\" (\"id\" text not null primary key, \"accountId\" text not null, \"providerId\" text not null, \"userId\" text not null references \"user\" (\"id\") on delete cascade, \"accessToken\" text, \"refreshToken\" text, \"idToken\" text, \"accessTokenExpiresAt\" timestamptz, \"refreshTokenExpiresAt\" timestamptz, \"scope\" text, \"password\" text, \"createdAt\" timestamptz default CURRENT_TIMESTAMP not null, \"updatedAt\" timestamptz not null);\n\ncreate table \"verification\" (\"id\" text not null primary key, \"identifier\" text not null, \"value\" text not null, \"expiresAt\" timestamptz not null, \"createdAt\" timestamptz default CURRENT_TIMESTAMP not null, \"updatedAt\" timestamptz default CURRENT_TIMESTAMP not null);\n\ncreate table \"deviceCode\" (\"id\" text not null primary key, \"deviceCode\" text not null unique, \"userCode\" text not null unique, \"userId\" text, \"expiresAt\" timestamptz not null, \"status\" text not null, \"lastPolledAt\" timestamptz, \"pollingInterval\" integer, \"clientId\" text, \"scope\" text);\n\ncreate table \"learnFeedback\" (\"id\" text not null primary key, \"cardId\" text not null, \"createdAt\" timestamptz not null, \"feedback\" text not null, \"personId\" text not null references \"user\" (\"id\") on delete cascade);\n\ncreate index \"session_userId_idx\" on \"session\" (\"userId\");\n\ncreate index \"account_userId_idx\" on \"account\" (\"userId\");\n\ncreate index \"verification_identifier_idx\" on \"verification\" (\"identifier\");\n",
+          "sha256": "5ff5f71df2ad8408a64d7bd1f9561d89712a6477a4bab63a88986da4e97915bd"
+        },
+        "1.7.11": {
+          "sql": "create table \"user\" (\"id\" text not null primary key, \"name\" text not null, \"email\" text not null unique, \"emailVerified\" boolean not null, \"image\" text, \"createdAt\" timestamptz default CURRENT_TIMESTAMP not null, \"updatedAt\" timestamptz default CURRENT_TIMESTAMP not null);\n\ncreate table \"session\" (\"id\" text not null primary key, \"expiresAt\" timestamptz not null, \"token\" text not null unique, \"createdAt\" timestamptz default CURRENT_TIMESTAMP not null, \"updatedAt\" timestamptz not null, \"ipAddress\" text, \"userAgent\" text, \"userId\" text not null references \"user\" (\"id\") on delete cascade);\n\ncreate table \"account\" (\"id\" text not null primary key, \"accountId\" text not null, \"providerId\" text not null, \"userId\" text not null references \"user\" (\"id\") on delete cascade, \"accessToken\" text, \"refreshToken\" text, \"idToken\" text, \"accessTokenExpiresAt\" timestamptz, \"refreshTokenExpiresAt\" timestamptz, \"scope\" text, \"password\" text, \"createdAt\" timestamptz default CURRENT_TIMESTAMP not null, \"updatedAt\" timestamptz not null);\n\ncreate table \"verification\" (\"id\" text not null primary key, \"identifier\" text not null, \"value\" text not null, \"expiresAt\" timestamptz not null, \"createdAt\" timestamptz default CURRENT_TIMESTAMP not null, \"updatedAt\" timestamptz default CURRENT_TIMESTAMP not null);\n\ncreate table \"deviceCode\" (\"id\" text not null primary key, \"deviceCode\" text not null unique, \"userCode\" text not null unique, \"userId\" text, \"expiresAt\" timestamptz not null, \"status\" text not null, \"lastPolledAt\" timestamptz, \"pollingInterval\" integer, \"clientId\" text, \"scope\" text);\n\ncreate table \"learnFeedback\" (\"id\" text not null primary key, \"cardId\" text not null, \"createdAt\" timestamptz not null, \"feedback\" text not null, \"personId\" text not null references \"user\" (\"id\") on delete cascade);\n\ncreate index \"session_userId_idx\" on \"session\" (\"userId\");\n\ncreate index \"account_userId_idx\" on \"account\" (\"userId\");\n\ncreate index \"verification_identifier_idx\" on \"verification\" (\"identifier\");\n",
+          "sha256": "5ff5f71df2ad8408a64d7bd1f9561d89712a6477a4bab63a88986da4e97915bd"
+        }
+      },
+      "diff": "",
+      "upgrade": {
+        "tablesAdded": 0,
+        "columnsAdded": 0,
+        "indexesAdded": 0,
+        "sql": ";\n"
+      }
+    }
+  },
+  "pins": {
+    "betterAuth": {
+      "from": "1.6.2",
+      "to": "1.7.11"
+    },
+    "betterAuthCoreAdaptersTelemetry": {
+      "from": "1.6.2",
+      "to": "1.7.11"
+    },
+    "betterAuthUtils": {
+      "from": "0.4.0",
+      "to": "0.5.0"
+    },
+    "kysely": {
+      "from": "0.28.17",
+      "to": "0.29.4"
+    }
+  },
+  "runtimeChecks": {
+    "providers": ["d1", "postgres"],
+    "oldSchemaSignup": "pass",
+    "oldSchemaSignIn": "pass",
+    "sessionCookie": "pass",
+    "deviceIssue": "pass",
+    "unclaimedApprovalRejected": "pass",
+    "claimedApproval": "pass",
+    "schemaValidation": "enabled",
+    "browserApprovalScript": "pass: executes the shipped approval script against both old-schema native auth instances",
+    "browserClaimMutation": "pass: removing the claim request makes browser approval fail"
+  },
+  "bundle": {
+    "budgetBytes": 2500000,
+    "beforeBytes": 2418776,
+    "untrimmedAfterBytes": 2526940,
+    "afterBytes": 2358811,
+    "publicWorkerBeforeBytes": 2176768,
+    "publicWorkerAfterBytes": 2176968
+  },
+  "registryAudit": {
+    "betterAuthVersion": "1.7.11",
+    "tarballSha512": "V4OMDdoFvOuAGbOb/mjNzX/iFJoC3hEF1rpL8vdI5eTR24dMJr7AWJuuhr6dE1ib/CBECzegt64ehS3/ngKYpQ==",
+    "integrityMatchesRegistry": true,
+    "provenance": "Registry advertises SLSA v1 attestation; signature not independently verified",
+    "publishedFiles": "466 files, dist output plus package metadata",
+    "installLifecycleScripts": [],
+    "reviewedDependencyChanges": [
+      "@better-auth/* 1.7.11",
+      "@better-auth/utils 0.5.0",
+      "better-call 1.4.2",
+      "@better-fetch/fetch 1.3.2",
+      "Kysely accepts 0.28.17 or 0.29.x; workspace aligns on 0.29.4"
+    ]
+  },
+  "scope": {
+    "holdsFor": "email and password plus deviceAuthorization; no jwt or oauth-provider plugin",
+    "otherPluginSets": "With jwt and oauth-provider, 1.7.11 adds tables oauthResource, oauthClientResource and oauthClientAssertion, plus 24 columns and 4 indexes, and removes validAudiences. Generate and apply a migration for that plugin set.",
+    "reportedBy": "Rubicon fitness desk (Titan), 2026-10-20"
+  }
+}
