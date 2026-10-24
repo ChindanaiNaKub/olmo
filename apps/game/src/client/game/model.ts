@@ -55,11 +55,14 @@ export const ModelSchema = Schema.Struct({
   error: Schema.NullOr(Schema.String),
   hits: Schema.Array(HitSchema),
   hover: Schema.NullOr(Schema.Struct({ x: Schema.Finite, y: Schema.Finite })),
+  isOwner: Schema.Boolean,
   joined: Schema.Boolean,
   lastSent: Schema.Finite,
+  locked: Schema.Boolean,
   name: Schema.String,
   nameDraft: Schema.String,
   now: Schema.Finite,
+  owner: Schema.NullOr(Schema.String),
   players: Schema.Array(PlayerStateSchema),
   pressed: Schema.Struct({
     jump: Schema.Boolean,
@@ -90,6 +93,26 @@ const readStoredName = (): string => {
 export const rememberName = (name: string): boolean => {
   try {
     localStorage.setItem(NAME_STORAGE_KEY, name);
+
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const OWNER_KEY_PREFIX = "olmo.owner.";
+
+export const readOwnerKey = (world: string): string | undefined => {
+  try {
+    return localStorage.getItem(`${OWNER_KEY_PREFIX}${world}`) ?? undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+export const rememberOwnerKey = (world: string, key: string): boolean => {
+  try {
+    localStorage.setItem(`${OWNER_KEY_PREFIX}${world}`, key);
 
     return true;
   } catch {
@@ -140,11 +163,14 @@ export const init: Runtime.ApplicationInit<Model, Message> = () => {
       error: null,
       hits: [],
       hover: null,
+      isOwner: false,
       joined: false,
       lastSent: 0,
+      locked: false,
       name,
       nameDraft: name,
       now: 0,
+      owner: null,
       players: [],
       pressed: { jump: false, left: false, right: false },
       punchAt: 0,

@@ -104,6 +104,12 @@ export const takeFromInventory = (
   return next;
 };
 
+export const accessRejection = (
+  locked: boolean,
+  isOwner: boolean
+): TileRejection | undefined =>
+  locked && !isOwner ? "world-locked" : undefined;
+
 export const canBreak = (
   tiles: readonly BlockId[],
   player: Readonly<Pick<PlayerState, "x" | "y">>,

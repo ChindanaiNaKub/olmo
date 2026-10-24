@@ -17,7 +17,7 @@ Workspace `package.json` files declare the pinned stack. Keep dependencies exact
 - `@xstate/effect` `1.0.0-alpha.9` bridges the two: machines run as scoped Effects via `createEffectActor`, side effects are declared `createEffectLogic` actors. `vendor/README.md` keeps the rules for the next unpublished pin.
 - Alchemy `2.0.0-beta.83` (Infrastructure as Effects) for every cloud resource; declared in `apps/infra/alchemy.run.ts`, authenticated through Alchemy profiles, never through env vars in this repo
 - TypeScript `7.0.2` in strict mode, patched by `@effect/tsgo` `0.54.0` in `prepare` so the Effect language service diagnostics in `tsconfig.base.json` fail `tsc`, not just the editor. Escape hatch for a real boundary: `// @effect-diagnostics-next-line <rule>:off -- <reason>`
-- `@effect/vitest` `4.0.0` for every Effect test: `it.effect` and `it.layer(layer)`; `Effect.run*` and `ManagedRuntime.make` in test files are a lint error
+- `@effect/vitest` `4.0.0` for every Effect test in the inherited reference surfaces: `it.effect` and `it.layer(layer)`; `Effect.run*` and `ManagedRuntime.make` in test files are a lint error. Olmo has no unit tests; see Testing.
 - `@oxlint/plugins` `1.88.0` for the two typed lint rules in `scripts/oxlint-plugin-*.ts` and the vendored [anti-slop](https://github.com/dmmulroy/anti-slop) rules in `tools/oxlint/anti-slop/` (all generic rules plus the Effect group, at `error`). The copy is ours; `UPSTREAM.md` there says where it came from and how to take upstream fixes
 - Oxlint `1.88.0` with Ultracite `8.0.1`, Oxfmt `0.73.0`, and Turborepo `2.11.9`
 - varlock `1.23.0`: declare every env var in `.env.schema`, never read `.env.local` directly, run `pnpm env:check` after schema edits
@@ -42,8 +42,8 @@ Inherited reference surfaces remain in the workspace so the rat-stack fence and 
 | Contract | `packages/game/src/contracts.ts` | Shared name, schemas, failure, annotations, and approval setting. |
 | Capability | `apps/server/src/worker.ts` | Binds one contract to a Durable Object method with `implement`. |
 | Projection | `packages/capability/src/to-rpc.ts` | Exposes implemented capabilities on one runtime surface. Olmo projects RPC. |
-| World | `apps/server/src/world-object.ts` | One Durable Object instance per world name. Owns tiles, sessions, validation, and storage. |
-| Session | `apps/server/src/world-object.ts` | One joined player: socket attachment, player state, inventory, and last-seen time. |
+| World | `apps/server/src/world-object.ts` | One Durable Object instance per world name. Owns tiles, sessions, ownership, validation, and storage. |
+| Session | `apps/server/src/world-object.ts` | One joined player: socket attachment, player state, inventory, owner flag, and last-seen time. |
 | Feature | `apps/game/src/features/game/` | Thin view that reads the Model and sends Messages. |
 | Client | `apps/game/src/client/game/` | Foldkit Model, Messages, update, Commands, socket resource, and subscriptions. |
 
@@ -59,7 +59,7 @@ Inherited reference surfaces remain in the workspace so the rat-stack fence and 
 | `pnpm check` | Typecheck, verify formatting, and run type-aware linting |
 | `pnpm lint` | Type-aware lint plus format check only; `turbo run check` runs this once at the root as `//#lint` |
 | `pnpm fix` | Apply Oxfmt and safe Oxlint fixes |
-| `pnpm test` | Build and run the Vitest suite once |
+| `pnpm test` | Build and run the e2e suite once |
 | `pnpm build` | Compile package outputs |
 | `pnpm typecheck` | `turbo run typecheck` |
 | `pnpm vendor:agent-sources` | Shallow-clone Effect, effect-solutions, xstate, alchemy, better-auth, and Foldkit mirrors |
@@ -71,6 +71,12 @@ Inherited reference surfaces remain in the workspace so the rat-stack fence and 
 Run `pnpm fix` only when you intend to rewrite files. Finish with `pnpm turbo run check test build --concurrency=1`.
 
 `pnpm dev` alone runs the client. It connects to `VITE_API_URL`, defaulting to `http://localhost:1337`, so the game shows the name gate and then an offline error unless an API is listening. Use `pnpm infra:dev` for the full local stack.
+
+## Testing
+
+Olmo tests the browser, not the modules. `apps/game/e2e.config.ts` starts Vite on a free port and `apps/game/tests/*.e2e.ts` drive it with [e2e](https://e2e.tester.army). `pnpm test` runs that suite. Do not add Vitest, `@effect/vitest`, or unit tests to `packages/game`, `apps/game`, `apps/server`, or `apps/infra`. The inherited reference surfaces keep their own Vitest suite.
+
+Tests use exact locators, so a run needs no model credential. The suite points `VITE_API_URL` at a closed port, so it asserts the served client and the offline path. Join, movement, chat, punch, and persistence wait for the real Durable Object; Cloudflare OAuth is still the blocker. Add `agents.default.model` to the config only when a goal needs judgment.
 
 ## Deploy
 
@@ -140,7 +146,7 @@ Preserve existing work. Inspect status before editing, stage only files changed 
 - The socket is a managed resource. A subscription that reads it starts only after the resource is acquired (`model.joined`), never before. This was a real bug: the subscription caught `ResourceNotAvailable` and stayed empty forever.
 - No comments in code. `no-comments/no-comments` (`scripts/oxlint-plugin-no-comments.ts`) bans them, after Lauren Tan's Dune rule: agents copy comments, and a comment that explains a workaround spreads the workaround. Say it in a name, a type, a test, a commit message, or the Brain. Two kinds survive: tool directives, with the reason inline after `--`, and a one-line `SAFETY:` invariant above a type assertion.
 - Diagnostic overrides are targeted and explained: `// @effect-diagnostics-next-line <rule>:off -- <reason>`. Lint overrides follow the same rule: `// oxlint-disable-next-line <rule> -- <reason>`. Every type assertion carries a one-line `SAFETY:` comment naming the invariant it relies on.
-- Tautological tests and change-detector tests are harmful. Prefer property and model tests over example tests. A domain rule is an `it.prop` over Effect `Arbitrary` inputs; keep example tests for seams. Plant a bug before trusting a new property: it must fail.
+- Tautological tests and change-detector tests are harmful. Olmo's regression tests are browser e2e over flows a player uses, in `apps/game/tests`. The reference surfaces keep property and model tests; do not extend that pattern into Olmo. Plant a bug before trusting a new test: it must fail.
 - Errors are part of the interface. Name the failure, keep its source context, say how to fix it, and fail at the boundary.
 - Hot pink is the only accent. `--accent` (#ff1493) marks the own-player outline and `:focus-visible`. Do not use pink for links, headings, tables, or ordinary UI text.
 - Pins stay exact. A vendored dependency carries a matching `minimumReleaseAgeExclude` entry and a removal rule in `vendor/README.md`.
@@ -148,7 +154,7 @@ Preserve existing work. Inspect status before editing, stage only files changed 
 ## Architecture
 
 - `packages/game` is the shared domain. `model.ts` owns schemas and constants. `physics.ts` owns movement, collision, spawn, reach, and validation. `world.ts` owns tiles and inventory rules. `contracts.ts` owns the four capabilities. It imports Effect only; it does not import a Worker, a Durable Object, Foldkit, or Alchemy.
-- `apps/server/src/world-object.ts` is the authority. The `World` Durable Object class owns `tiles`, `worldName`, `sessions`, and `nextOrdinal`. It loads storage on construction, rebuilds sessions from socket attachments, and returns methods to the Alchemy runtime. Socket handlers and capability handlers call the same `punch`, `place`, and `snapshot` methods.
+- `apps/server/src/world-object.ts` is the authority. The `World` Durable Object class owns `tiles`, `worldName`, `ownership`, `sessions`, and `nextOrdinal`. It loads storage on construction, rebuilds sessions from socket attachments, and returns methods to the Alchemy runtime. Socket handlers and capability handlers call the same `punch`, `place`, and `snapshot` methods.
 - `apps/server/src/worker.ts` is the `Api` Worker. It decodes `/ws?world=`, forwards the upgrade to the world's Durable Object, serves `/rpc` from the capability projection, and exports the `World` class for Wrangler. It is the only place the server composition is wired.
 - `apps/game/src/client/game/` owns the Foldkit program. `model.ts` holds the Model and world-from-location logic. `message.ts` holds the Message union. `update.ts` folds server messages, input, and ticks. `command.ts` sends a client message over the socket. `socket.ts` owns the WebSocket managed resource and the decode boundary. `subscription.ts` gates the socket stream on `joined`.
 - `apps/game/src/features/game/view.ts` is the only view. It draws the Canvas scene, HUD, hotbar, chat, and name gate. The hotbar sits below the stage; do not put a control bar over the play field.
@@ -164,7 +170,7 @@ One input follows one path: view → Message → `update` → named Command → 
 
 ## Boundaries and sign-off
 
-- Safe by default: adding a domain rule or capability in `packages/game` and wiring it into `apps/server`; new or tightened property tests; a targeted diagnostic override with a written reason; README, AGENTS.md, VISION.md, `docs/`, and `.brain/` edits; tightening a lint rule; any change under `apps/infra` and `pnpm infra:deploy` once `pnpm infra:plan` shows only the intended diff and the gate passes.
+- Safe by default: adding a domain rule or capability in `packages/game` and wiring it into `apps/server`; new or tightened e2e tests; a targeted diagnostic override with a written reason; README, AGENTS.md, VISION.md, `docs/`, and `.brain/` edits; tightening a lint rule; any change under `apps/infra` and `pnpm infra:deploy` once `pnpm infra:plan` shows only the intended diff and the gate passes.
 - When a call is unclear, get a second opinion from a Pi session on `openai-codex/gpt-6-astra:xhigh` before asking the owner.
 - Needs owner sign-off: adding or changing a dependency version (pins are exact and CI installs cold); any edit to `oxlint.config.ts`, the diagnostics map in `tsconfig.base.json`, `lefthook.yml`, or `scripts/vcs-command-policy.js` that loosens the fence; `pnpm infra:destroy`, and a deploy whose plan replaces or deletes a resource; widening sandbox permissions or adding a runtime that reaches the network; exposing `serve` or `mcp` beyond localhost; vendoring a package as a `file:` tarball; deleting `.agent_sources/` or `vendor/`.
 

@@ -117,6 +117,28 @@ button {
   background: #f87171;
 }
 
+.owner-chip,
+.owner-action {
+  background: rgba(11, 15, 23, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  color: #e2e8f0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 12px;
+}
+
+.owner-action {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.owner-action:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
 .chat {
   bottom: 12px;
   display: flex;

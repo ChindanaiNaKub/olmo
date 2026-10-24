@@ -142,12 +142,22 @@ export const WorldSummarySchema = Schema.Struct({
 
 export type WorldSummary = typeof WorldSummarySchema.Type;
 
+export const ClaimKeySchema = Schema.String.check(
+  Schema.isPattern(/^[A-Za-z0-9-]{8,64}$/u)
+);
+
+export type ClaimKey = typeof ClaimKeySchema.Type;
+
 export const ClientMessageSchema = Schema.TaggedUnion({
   Chat: {
     text: ChatTextSchema,
   },
+  Claim: {
+    key: ClaimKeySchema,
+  },
   Join: {
     name: PlayerNameSchema,
+    ownerKey: Schema.optional(Schema.String),
   },
   Move: {
     facing: FacingSchema,
@@ -164,6 +174,9 @@ export const ClientMessageSchema = Schema.TaggedUnion({
   Punch: {
     tx: Schema.Finite,
     ty: Schema.Finite,
+  },
+  SetLock: {
+    locked: Schema.Boolean,
   },
 });
 
@@ -184,6 +197,10 @@ export const ServerMessageSchema = Schema.TaggedUnion({
   Inventory: {
     counts: Schema.Array(Schema.Finite),
   },
+  Ownership: {
+    locked: Schema.Boolean,
+    owner: Schema.NullOr(Schema.String),
+  },
   PlayerJoined: {
     player: PlayerStateSchema,
   },
@@ -197,6 +214,9 @@ export const ServerMessageSchema = Schema.TaggedUnion({
     reason: Schema.String,
   },
   Snapshot: {
+    isOwner: Schema.Boolean,
+    locked: Schema.Boolean,
+    owner: Schema.NullOr(Schema.String),
     snapshot: WorldSnapshotSchema,
     token: Schema.String,
     you: Schema.String,
@@ -229,6 +249,7 @@ export const TileRejectionSchema = Schema.Literals([
   "occupied",
   "out-of-reach",
   "no-inventory",
+  "world-locked",
 ]);
 
 export type TileRejection = typeof TileRejectionSchema.Type;

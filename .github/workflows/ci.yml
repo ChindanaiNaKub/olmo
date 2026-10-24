@@ -26,6 +26,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Fetch pinned source objects
         run: pnpm sources:fetch
+      - name: Install e2e browsers
+        run: pnpm --filter @olmo/client exec e2e-web install chromium --with-deps
       - name: Check and test
         # Serialize Turbo tasks so concurrent Vitest pools do not contend on the CI runner.
         run: pnpm turbo run check test build --concurrency=1

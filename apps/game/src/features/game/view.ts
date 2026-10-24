@@ -532,11 +532,45 @@ const statusLabel = (model: Model): string => {
   return model.connection === "connecting" ? "connecting" : "offline";
 };
 
+const ownershipControl = (model: Model, h: HtmlBuilder<Message>): Html => {
+  if (model.isOwner) {
+    return h.button(
+      [
+        h.Class("owner-action"),
+        h.OnClick(GameMessage.ToggledWorldLock()),
+        h.Type("button"),
+      ],
+      [model.locked ? "Unlock world" : "Lock world"]
+    );
+  }
+
+  if (model.owner !== null) {
+    return h.div(
+      [h.Class("owner-chip")],
+      [model.locked ? `Locked by ${model.owner}` : `${model.owner}'s world`]
+    );
+  }
+
+  if (model.world !== "lobby" && model.joined) {
+    return h.button(
+      [
+        h.Class("owner-action"),
+        h.OnClick(GameMessage.ClaimedWorld()),
+        h.Type("button"),
+      ],
+      ["Claim this world"]
+    );
+  }
+
+  return h.div([h.Class("hidden")], []);
+};
+
 const topBar = (model: Model, h: HtmlBuilder<Message>): Html =>
   h.div(
     [h.Class("topbar")],
     [
       h.div([h.Class("world-tag")], [`/w/${model.world}`]),
+      ownershipControl(model, h),
       h.div([h.Class(`status ${model.connection}`)], [statusLabel(model)]),
     ]
   );

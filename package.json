@@ -26,7 +26,7 @@
     "deploy:preview": "bash scripts/deploy-preview.sh deploy",
     "deploy:preview:destroy": "bash scripts/deploy-preview.sh destroy",
     "deploy:rollback": "pnpm turbo run build --concurrency=1 && APP_ENV=production pnpm exec varlock run -- sh -c 'cd apps/infra && exec node --import ./node_modules/alchemy/bin/register-oxc.js ../../packages/deploy/dist/cli.js \"$@\"' deploy deployRollback",
-    "infra:deploy": "pnpm --filter @rat-stack/infra deploy",
+    "infra:deploy": "pnpm --filter @rat-stack/infra run deploy",
     "infra:destroy": "pnpm --filter @rat-stack/infra destroy",
     "infra:dev": "pnpm --filter @rat-stack/infra dev",
     "infra:plan": "pnpm --filter @rat-stack/infra plan",

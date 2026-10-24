@@ -7,6 +7,7 @@
     "build": "vite build",
     "check": "pnpm run typecheck",
     "dev": "vite",
+    "test": "e2e run",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
@@ -16,8 +17,10 @@
     "foldkit": "0.168.0"
   },
   "devDependencies": {
+    "@e2e-dev/web": "0.15.2",
     "@foldkit/vite-plugin": "0.27.1",
     "@types/node": "24.19.2",
+    "e2e": "0.21.2",
     "typescript": "7.0.2",
     "vite": "8.3.4"
   }

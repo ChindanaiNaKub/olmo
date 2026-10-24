@@ -24,7 +24,12 @@ import { SendClientMessage } from "./command.js";
 import { GameMessage } from "./message.js";
 import type { Message } from "./message.js";
 import type { ChatEntry, Hit, Model } from "./model.js";
-import { BURST_MS, rememberName } from "./model.js";
+import {
+  BURST_MS,
+  readOwnerKey,
+  rememberName,
+  rememberOwnerKey,
+} from "./model.js";
 import type { GameSocketService } from "./socket.js";
 
 type UpdateReturn = Update.Return<Model, Message, GameSocketService>;
@@ -111,6 +116,13 @@ const handleServerMessage = (
       model: modifyFields(model, { counts: () => counts }),
     }),
 
+    Ownership: ({ locked, owner }) => ({
+      model: modifyFields(model, {
+        locked: () => locked,
+        owner: () => owner,
+      }),
+    }),
+
     PlayerJoined: ({ player }) => ({
       model: modifyFields(model, {
         players: (players) => upsertPlayer(players, player),
@@ -142,7 +154,7 @@ const handleServerMessage = (
       }),
     }),
 
-    Snapshot: ({ snapshot, you }) => {
+    Snapshot: ({ isOwner, locked, owner, snapshot, you }) => {
       const self = snapshot.players.find((player) => player.id === you) ?? null;
 
       return {
@@ -151,7 +163,10 @@ const handleServerMessage = (
           connection: () => "live",
           error: () => null,
           hits: () => [],
+          isOwner: () => isOwner,
           joined: () => true,
+          locked: () => locked,
+          owner: () => owner,
           players: () => snapshot.players,
           self: () => self,
           selfId: () => you,
@@ -205,6 +220,22 @@ const handleServerMessage = (
 
 export const update = (model: Model, message: Message): UpdateReturn =>
   GameMessage.match<UpdateReturn>(message, {
+    ClaimedWorld: () => {
+      // @effect-diagnostics-next-line cryptoRandomUUID:off -- update is a synchronous fold; the key must exist before the command runs and no Crypto service is available in the browser program.
+      const key = crypto.randomUUID();
+
+      rememberOwnerKey(model.world, key);
+
+      return {
+        commands: [
+          SendClientMessage({
+            message: ClientMessageSchema.cases.Claim.make({ key }),
+          }),
+        ],
+        model: modifyFields(model, { isOwner: () => true }),
+      };
+    },
+
     ClickedTile: ({ x, y }) => {
       const { self } = model;
 
@@ -398,6 +429,7 @@ export const update = (model: Model, message: Message): UpdateReturn =>
           SendClientMessage({
             message: ClientMessageSchema.cases.Join.make({
               name: model.name,
+              ownerKey: readOwnerKey(model.world),
             }),
           }),
         ],
@@ -501,6 +533,17 @@ export const update = (model: Model, message: Message): UpdateReturn =>
         }),
       };
     },
+
+    ToggledWorldLock: () => ({
+      commands: [
+        SendClientMessage({
+          message: ClientMessageSchema.cases.SetLock.make({
+            locked: !model.locked,
+          }),
+        }),
+      ],
+      model,
+    }),
 
     UpdatedChatDraft: ({ value }) => ({
       model: modifyFields(model, {

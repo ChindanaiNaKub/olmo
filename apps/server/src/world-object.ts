@@ -27,6 +27,7 @@ import {
   tileIndex,
 } from "@olmo/game/physics";
 import {
+  accessRejection,
   addToInventory,
   createWorldTiles,
   emptyInventory,
@@ -42,6 +43,7 @@ interface Session {
   readonly color: string;
   readonly counts: readonly number[];
   readonly id: string;
+  readonly isOwner: boolean;
   readonly lastSeen: number;
   readonly name: string;
   readonly player: PlayerState;
@@ -54,6 +56,16 @@ interface Attachment {
   readonly session?: Session;
 }
 
+interface Ownership {
+  readonly key: string;
+  readonly locked: boolean;
+  readonly name: string;
+}
+
+export type ClaimOutcome = "ok" | "claimed" | "commons" | "player-not-found";
+
+export type LockOutcome = "ok" | "not-owner" | "player-not-found";
+
 export type TileOutcome =
   | Readonly<{ ok: true; change: TileChange }>
   | Readonly<{ ok: false; reason: TileRejection | "player-not-found" }>;
@@ -65,11 +77,21 @@ const rejected = (reason: TileRejection | "player-not-found"): TileOutcome => ({
   reason,
 });
 
+const claimReasons: Readonly<Record<Exclude<ClaimOutcome, "ok">, string>> = {
+  claimed: "This world already has an owner",
+  commons: "The lobby is shared and cannot be owned",
+  "player-not-found": "That player is not in this world",
+};
+
 const TILES_KEY = "tiles";
 
-const CRACK_RESET_MS = 1500;
-
 const NAME_KEY = "name";
+
+const OWNERSHIP_KEY = "ownership";
+
+const COMMONS_WORLD = "lobby";
+
+const CRACK_RESET_MS = 1500;
 
 const encode = (message: ServerMessage): string =>
   JSON.stringify(Schema.encodeSync(ServerMessageSchema)(message));
@@ -106,8 +128,12 @@ export default class World extends Cloudflare.DurableObject<World>()(
 
       const storedName = yield* state.storage.get<string>(NAME_KEY);
 
+      const storedOwnership =
+        yield* state.storage.get<Ownership>(OWNERSHIP_KEY);
+
       let tiles = storedTiles ?? createWorldTiles();
       let worldName = storedName ?? "lobby";
+      let ownership = storedOwnership ?? null;
       let nextOrdinal = 1;
       let nameLocked = storedName !== undefined;
       const sessions = new Map<string, Session>();
@@ -202,7 +228,8 @@ export default class World extends Cloudflare.DurableObject<World>()(
 
       const join = Effect.fn("World.join")(function* join(
         socket: Cloudflare.WebSocket,
-        name: string
+        name: string,
+        ownerKey: string | undefined
       ) {
         const attachment = socket.deserializeAttachment<Attachment>();
 
@@ -225,10 +252,16 @@ export default class World extends Cloudflare.DurableObject<World>()(
         // @effect-diagnostics-next-line cryptoRandomUUIDInEffect:off -- Workers ship Web Crypto and the Effect Crypto service needs a platform layer this Durable Object does not provide.
         const token = crypto.randomUUID();
 
+        const isOwner =
+          ownership !== null &&
+          ownerKey !== undefined &&
+          ownerKey === ownership.key;
+
         const session: Session = {
           color: player.color,
           counts: emptyInventory(),
           id: attachment.id,
+          isOwner,
           lastSeen: performance.now(),
           name,
           player,
@@ -242,6 +275,9 @@ export default class World extends Cloudflare.DurableObject<World>()(
         yield* sendTo(
           socket,
           ServerMessageSchema.cases.Snapshot.make({
+            isOwner,
+            locked: ownership?.locked ?? false,
+            owner: ownership?.name ?? null,
             snapshot: snapshot(),
             token,
             you: attachment.id,
@@ -320,6 +356,15 @@ export default class World extends Cloudflare.DurableObject<World>()(
           return rejected("player-not-found");
         }
 
+        const denied = accessRejection(
+          ownership?.locked ?? false,
+          session.isOwner
+        );
+
+        if (denied !== undefined) {
+          return rejected(denied);
+        }
+
         const index = tileIndex(tx, ty);
         const now = performance.now();
 
@@ -389,6 +434,15 @@ export default class World extends Cloudflare.DurableObject<World>()(
           return rejected("player-not-found");
         }
 
+        const denied = accessRejection(
+          ownership?.locked ?? false,
+          session.isOwner
+        );
+
+        if (denied !== undefined) {
+          return rejected(denied);
+        }
+
         const { counts: previousCounts } = session;
 
         if (inventoryCount(previousCounts, block) < 1) {
@@ -433,6 +487,65 @@ export default class World extends Cloudflare.DurableObject<World>()(
         return accepted(result.change);
       });
 
+      const claim = Effect.fn("World.claim")(function* claim(
+        playerId: string,
+        key: string
+      ) {
+        const session = sessions.get(playerId);
+
+        if (session === undefined) {
+          return "player-not-found" satisfies ClaimOutcome;
+        }
+
+        if (worldName === COMMONS_WORLD) {
+          return "commons" satisfies ClaimOutcome;
+        }
+
+        if (ownership !== null) {
+          return "claimed" satisfies ClaimOutcome;
+        }
+
+        ownership = { key, locked: false, name: session.name };
+
+        yield* state.storage.put(OWNERSHIP_KEY, ownership);
+        yield* saveSession({ ...session, isOwner: true });
+        yield* broadcast(
+          ServerMessageSchema.cases.Ownership.make({
+            locked: false,
+            owner: session.name,
+          })
+        );
+
+        return "ok" satisfies ClaimOutcome;
+      });
+
+      const setLock = Effect.fn("World.setLock")(function* setLock(
+        playerId: string,
+        locked: boolean
+      ) {
+        const session = sessions.get(playerId);
+
+        if (session === undefined) {
+          return "player-not-found" satisfies LockOutcome;
+        }
+
+        if (ownership === null || !session.isOwner) {
+          return "not-owner" satisfies LockOutcome;
+        }
+
+        ownership = { ...ownership, locked };
+
+        yield* state.storage.put(OWNERSHIP_KEY, ownership);
+        yield* broadcast(
+          ServerMessageSchema.cases.Ownership.make({
+            locked,
+            owner: ownership.name,
+          })
+        );
+
+        return "ok" satisfies LockOutcome;
+      });
+
       const chat = Effect.fn("World.chat")(function* chat(
         playerId: string,
         text: string
@@ -451,6 +564,42 @@ export default class World extends Cloudflare.DurableObject<World>()(
           })
         );
       });
+
+      const handleClaim = Effect.fn("World.handleClaim")(function* handleClaim(
+        socket: Cloudflare.WebSocket,
+        playerId: string,
+        key: string
+      ) {
+        const outcome = yield* claim(playerId, key);
+
+        if (outcome !== "ok") {
+          yield* sendTo(
+            socket,
+            ServerMessageSchema.cases.Rejected.make({
+              reason: claimReasons[outcome],
+            })
+          );
+        }
+      });
+
+      const handleSetLock = Effect.fn("World.handleSetLock")(
+        function* handleSetLock(
+          socket: Cloudflare.WebSocket,
+          playerId: string,
+          locked: boolean
+        ) {
+          const outcome = yield* setLock(playerId, locked);
+
+          if (outcome !== "ok") {
+            yield* sendTo(
+              socket,
+              ServerMessageSchema.cases.Rejected.make({
+                reason: "Only this world's owner can lock it",
+              })
+            );
+          }
+        }
+      );
 
       const handlePunch = Effect.fn("World.handlePunch")(function* handlePunch(
         socket: Cloudflare.WebSocket,
@@ -518,10 +667,13 @@ export default class World extends Cloudflare.DurableObject<World>()(
 
           yield* ClientMessageSchema.match(decoded.value, {
             Chat: (message) => chat(attachment.id, message.text),
-            Join: (message) => join(socket, message.name),
+            Claim: (message) => handleClaim(socket, attachment.id, message.key),
+            Join: (message) => join(socket, message.name, message.ownerKey),
             Move: (message) => move(socket, attachment.id, message),
             Place: (message) => handlePlace(socket, attachment.id, message),
             Punch: (message) => handlePunch(socket, attachment.id, message),
+            SetLock: (message) =>
+              handleSetLock(socket, attachment.id, message.locked),
           });
         }
       );

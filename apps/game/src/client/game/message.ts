@@ -3,6 +3,7 @@ import { Schema } from "effect";
 import { defineMessageUnion } from "foldkit/message";
 
 export const GameMessage = defineMessageUnion({
+  ClaimedWorld: {},
   ClickedTile: { x: Schema.Finite, y: Schema.Finite },
   ClosedChat: {},
   HoveredTile: { x: Schema.Finite, y: Schema.Finite },
@@ -19,6 +20,7 @@ export const GameMessage = defineMessageUnion({
   SubmittedChat: {},
   SubmittedName: {},
   Ticked: { deltaTime: Schema.Finite },
+  ToggledWorldLock: {},
   UpdatedChatDraft: { value: Schema.String },
   UpdatedNameDraft: { value: Schema.String },
 });

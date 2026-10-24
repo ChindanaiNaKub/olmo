@@ -23,6 +23,8 @@ minimumReleaseAgeExclude:
   - alchemy@2.0.0-beta.83
   - effect@4.0.0
   - "@foldkit/oxlint-plugin@0.15.3"
+  - e2e@0.21.2
+  - "@e2e-dev/web@0.15.2"
   - "@effect/platform-node@4.0.0"
   - "@effect/platform-node-shared@4.0.0"
   - "@effect/sql-pg@4.0.0"
